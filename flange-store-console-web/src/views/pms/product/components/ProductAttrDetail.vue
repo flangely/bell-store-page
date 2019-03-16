@@ -231,7 +231,7 @@
       }
     },
     created() {
-      this.getProductAttrCateList();
+      // this.getProductAttrCateList();
     },
     watch: {
       productId:function (newValue) {

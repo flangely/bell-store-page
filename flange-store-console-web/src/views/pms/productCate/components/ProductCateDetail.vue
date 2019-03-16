@@ -39,7 +39,7 @@
       <el-form-item label="分类图标：">
         <single-upload v-model="productCate.icon"></single-upload>
       </el-form-item>
-      <el-form-item v-for="(filterProductAttr, index) in filterProductAttrList"
+      <!-- <el-form-item v-for="(filterProductAttr, index) in filterProductAttrList"
                     :label="index | filterLabelFilter"
                     :key="filterProductAttr.key"
       >
@@ -49,10 +49,10 @@
           :options="filterAttrs">
         </el-cascader>
         <el-button style="margin-left: 20px" @click.prevent="removeFilterAttr(filterProductAttr)">删除</el-button>
-      </el-form-item>
-      <el-form-item>
+      </el-form-item> -->
+      <!-- <el-form-item>
         <el-button size="small" type="primary" @click="handleAddFilterAttr()">新增</el-button>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="关键词：">
         <el-input v-model="productCate.keywords"></el-input>
       </el-form-item>
@@ -100,7 +100,7 @@
         selectProductCateList: [],
         rules: {
           name: [
-            {required: true, message: '请输入品牌名称', trigger: 'blur'},
+            {required: true, message: '请输入出版社名称', trigger: 'blur'},
             {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
           ]
         },
@@ -115,22 +115,22 @@
         getProductCate(this.$route.query.id).then(response => {
           this.productCate = response.data;
         });
-        getProductAttrInfo(this.$route.query.id).then(response => {
-          if (response.data != null && response.data.length > 0) {
-            this.filterProductAttrList = [];
-            for (let i = 0; i < response.data.length; i++) {
-              this.filterProductAttrList.push({
-                key: Date.now() + i,
-                value: [response.data[i].attributeCategoryId, response.data[i].attributeId]
-              })
-            }
-          }
-        });
+        // getProductAttrInfo(this.$route.query.id).then(response => {
+        //   if (response.data != null && response.data.length > 0) {
+        //     this.filterProductAttrList = [];
+        //     for (let i = 0; i < response.data.length; i++) {
+        //       this.filterProductAttrList.push({
+        //         key: Date.now() + i,
+        //         value: [response.data[i].attributeCategoryId, response.data[i].attributeId]
+        //       })
+        //     }
+        //   }
+        // });
       } else {
         this.productCate = Object.assign({}, defaultProductCate);
       }
       this.getSelectProductCateList();
-      this.getProductAttrCateList();
+      // this.getProductAttrCateList();
     },
     methods: {
       getSelectProductCateList() {
@@ -219,14 +219,14 @@
         }];
       },
       removeFilterAttr(productAttributeId) {
-        if (this.filterProductAttrList.length === 1) {
-          this.$message({
-            message: '至少要留一个',
-            type: 'warning',
-            duration: 1000
-          });
-          return;
-        }
+        // if (this.filterProductAttrList.length === 1) {
+        //   this.$message({
+        //     message: '至少要留一个',
+        //     type: 'warning',
+        //     duration: 1000
+        //   });
+        //   return;
+        // }
         var index = this.filterProductAttrList.indexOf(productAttributeId);
         if (index !== -1) {
           this.filterProductAttrList.splice(index, 1)
@@ -248,13 +248,13 @@
       }
     },
     filters: {
-      filterLabelFilter(index) {
-        if (index === 0) {
-          return '筛选属性：';
-        } else {
-          return '';
-        }
-      }
+      // filterLabelFilter(index) {
+      //   if (index === 0) {
+      //     return '筛选属性：';
+      //   } else {
+      //     return '';
+      //   }
+      // }
     }
   }
 </script>
