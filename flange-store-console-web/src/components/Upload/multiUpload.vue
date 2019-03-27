@@ -1,7 +1,7 @@
 <template> 
   <div>
     <el-upload
-      action="http://macro-oss.oss-cn-shenzhen.aliyuncs.com"
+      action="/image/upload"
       :data="dataObj"
       list-type="picture-card"
       :file-list="fileList"
@@ -21,6 +21,7 @@
 </template>
 <script>
   import {policy} from '@/api/oss'
+  import axios from 'axios'
 
   export default {
     name: 'multiUpload',
@@ -71,23 +72,33 @@
         this.dialogVisible = true;
         this.dialogImageUrl=file.url;
       },
-      beforeUpload(file) {
-        let _self = this;
-        return new Promise((resolve, reject) => {
-          policy().then(response => {
-            _self.dataObj.policy = response.data.policy;
-            _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessKeyId;
-            _self.dataObj.key = response.data.dir + '/${filename}';
-            _self.dataObj.dir = response.data.dir;
-            _self.dataObj.host = response.data.host;
-            resolve(true)
-          }).catch(err => {
-            console.log(err)
-            reject(false)
-          })
-        })
-      },
+      // beforeUpload(file) {
+      //   let _self = this;
+      //    return new Promise((resolve, reject) => {
+      //     policy(file).then(response => {
+      //       _self.dataObj.policy = response.data.policy;
+      //       // _self.dataObj.signature = response.data.signature;
+      //       // _self.dataObj.ossaccessKeyId = response.data.accessKeyId;
+      //       // _self.dataObj.key = response.data.dir + '/${filename}';
+      //       // _self.dataObj.dir = response.data.dir;
+      //       // _self.dataObj.host = response.data.host;
+      //       console.log(response.data);
+      //       resolve(true)
+      //     }).catch(err => {
+      //       console.log(err)
+      //       reject(false)
+      //     })
+      //   })
+      //   // var fd = new FormData();
+      //   // fd.append('file',file);
+      //   // fd.append('action','test');
+      //   // axios.post('http://localhost:8080/console/image/upload', fd, {
+      //   //   headers: { 'Content-Type': 'multipart/form-data' }
+      //   // }).then(res => {
+      //   //   console.log(res.data);
+      //   // });
+
+      // },
       handleUploadSuccess(res, file) {
         this.fileList.push({url: file.name,url:this.dataObj.host + '/' + this.dataObj.dir + '/' + file.name});
         this.emitInput(this.fileList);
