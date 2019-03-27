@@ -5,7 +5,6 @@
       :data="dataObj"
       list-type="picture-card"
       :file-list="fileList"
-      :before-upload="beforeUpload"
       :on-remove="handleRemove"
       :on-success="handleUploadSuccess"
       :on-preview="handlePreview"
@@ -100,7 +99,7 @@
 
       // },
       handleUploadSuccess(res, file) {
-        this.fileList.push({url: file.name,url:this.dataObj.host + '/' + this.dataObj.dir + '/' + file.name});
+        this.fileList.push({url:res.data});
         this.emitInput(this.fileList);
       },
       handleExceed(files, fileList) {

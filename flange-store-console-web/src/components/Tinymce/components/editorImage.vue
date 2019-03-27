@@ -5,8 +5,7 @@
     </el-button>
     <el-dialog append-to-body :visible.sync="dialogVisible">
       <el-upload class="editor-slide-upload"
-                 action="http://macro-oss.oss-cn-shenzhen.aliyuncs.com"
-                 :data="dataObj"
+                 action="/image/upload"
                  :multiple="true"
                  :file-list="fileList"
                  :show-file-list="true"
@@ -31,21 +30,20 @@
       color: {
         type: String,
         default: '#1890ff'
-      }
+      },
     },
     data() {
       return {
         dialogVisible: false,
-        listObj: {},
-        fileList: [],
+        listObj: [],
+        fileList:[],
         dataObj: {
-          policy: '',
-          signature: '',
-          key: '',
-          ossaccessKeyId: '',
-          dir: '',
-          host: ''
-        }
+          url:'',
+          hasSuccess:false,
+          uid:''
+        },
+        width:'300',
+        height:'200'
       }
     },
     methods: {
@@ -69,8 +67,8 @@
         const objKeyArr = Object.keys(this.listObj)
         for (let i = 0, len = objKeyArr.length; i < len; i++) {
           if (this.listObj[objKeyArr[i]].uid === uid) {
-            this.listObj[objKeyArr[i]].url = this.dataObj.host + '/' + this.dataObj.dir + '/' + file.name;
             this.listObj[objKeyArr[i]].hasSuccess = true;
+            this.listObj[objKeyArr[i]].url = response.data;
             return
           }
         }
@@ -86,24 +84,9 @@
         }
       },
       beforeUpload(file) {
-        const _self = this
         const fileName = file.uid;
         this.listObj[fileName] = {};
-        return new Promise((resolve, reject) => {
-          policy().then(response => {
-            _self.dataObj.policy = response.data.policy;
-            _self.dataObj.signature = response.data.signature;
-            _self.dataObj.ossaccessKeyId = response.data.accessKeyId;
-            _self.dataObj.key = response.data.dir + '/${filename}';
-            _self.dataObj.dir = response.data.dir;
-            _self.dataObj.host = response.data.host;
-            _self.listObj[fileName] = {hasSuccess: false, uid: file.uid, width: this.width, height: this.height};
-            resolve(true)
-          }).catch(err => {
-            console.log(err)
-            reject(false)
-          })
-        })
+        this.listObj[fileName] = {hasSuccess: false, uid: file.uid, url:'', width: this.width, height: this.height};
       }
     }
   }

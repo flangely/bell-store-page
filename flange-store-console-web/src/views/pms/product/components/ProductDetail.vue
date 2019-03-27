@@ -2,9 +2,9 @@
   <el-card class="form-container" shadow="never">
     <el-steps :active="active" finish-status="success" align-center>
       <el-step title="填写商品信息"></el-step>
-      <el-step title="填写商品促销"></el-step>
+      <!-- <el-step title="填写商品促销"></el-step> -->
       <el-step title="填写商品属性"></el-step>
-      <el-step title="选择商品关联"></el-step>
+      <!-- <el-step title="选择商品关联"></el-step> -->
     </el-steps>
     <product-info-detail
       v-show="showStatus[0]"
@@ -12,34 +12,34 @@
       :is-edit="isEdit"
       @nextStep="nextStep">
     </product-info-detail>
-    <product-sale-detail
+    <!-- <product-sale-detail
       v-show="showStatus[1]"
       v-model="productParam"
       :is-edit="isEdit"
       @nextStep="nextStep"
       @prevStep="prevStep">
-    </product-sale-detail>
+    </product-sale-detail> -->
     <product-attr-detail
-      v-show="showStatus[2]"
-      v-model="productParam"
-      :is-edit="isEdit"
-      @nextStep="nextStep"
-      @prevStep="prevStep">
-    </product-attr-detail>
-    <product-relation-detail
-      v-show="showStatus[3]"
+      v-show="showStatus[1]"
       v-model="productParam"
       :is-edit="isEdit"
       @prevStep="prevStep"
       @finishCommit="finishCommit">
-    </product-relation-detail>
+    </product-attr-detail>
+    <!-- <product-relation-detail
+      v-show="showStatus[2]"
+      v-model="productParam"
+      :is-edit="isEdit"
+      @prevStep="prevStep"
+      @finishCommit="finishCommit">
+    </product-relation-detail> -->
   </el-card>
 </template>
 <script>
   import ProductInfoDetail from './ProductInfoDetail';
-  import ProductSaleDetail from './ProductSaleDetail';
+  // import ProductSaleDetail from './ProductSaleDetail';
   import ProductAttrDetail from './ProductAttrDetail';
-  import ProductRelationDetail from './ProductRelationDetail';
+  // import ProductRelationDetail from './ProductRelationDetail';
   import {createProduct,getProduct,updateProduct} from '@/api/product';
 
   const defaultProductParam = {
@@ -105,7 +105,7 @@
   };
   export default {
     name: 'ProductDetail',
-    components: {ProductInfoDetail, ProductSaleDetail, ProductAttrDetail, ProductRelationDetail},
+    components: {ProductInfoDetail, ProductAttrDetail},
     props: {
       isEdit: {
         type: Boolean,
@@ -120,11 +120,11 @@
       }
     },
     created(){
-      if(this.isEdit){
-        getProduct(this.$route.query.id).then(response=>{
-          this.productParam=response.data;
-        });
-      }
+      // if(this.isEdit){
+      //   getProduct(this.$route.query.id).then(response=>{
+      //     this.productParam=response.data;
+      //   });
+      // }
     },
     methods: {
       hideAll() {
