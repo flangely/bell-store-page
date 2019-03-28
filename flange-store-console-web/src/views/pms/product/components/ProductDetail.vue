@@ -120,11 +120,11 @@
       }
     },
     created(){
-      // if(this.isEdit){
-      //   getProduct(this.$route.query.id).then(response=>{
-      //     this.productParam=response.data;
-      //   });
-      // }
+      if(this.isEdit){
+        getProduct(this.$route.query.id).then(response=>{
+          this.productParam=response.data;
+        });
+      }
     },
     methods: {
       hideAll() {

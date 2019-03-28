@@ -3,6 +3,7 @@
     <el-upload
       action="/image/upload"
       :data="dataObj"
+      :multiple=true
       list-type="picture-card"
       :file-list="fileList"
       :on-remove="handleRemove"
