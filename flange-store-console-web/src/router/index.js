@@ -273,12 +273,12 @@ export const constantRouterMap = [
         component: () => import('@/views/sms/hot/index'),
         meta: {title: '人气推荐', icon: 'sms-hot'}
       },
-      {
-        path: 'subject',
-        name: 'homeSubject',
-        component: () => import('@/views/sms/subject/index'),
-        meta: {title: '专题推荐', icon: 'sms-subject'}
-      },
+      // {
+      //   path: 'subject',
+      //   name: 'homeSubject',
+      //   component: () => import('@/views/sms/subject/index'),
+      //   meta: {title: '专题推荐', icon: 'sms-subject'}
+      // },
       {
         path: 'advertise',
         name: 'homeAdvertise',

@@ -127,6 +127,12 @@
       }
     },
     methods: {
+      sleep(delay) {
+        let start = (new Date()).getTime();
+        while ((new Date()).getTime() - start < delay) {
+          continue;
+        }
+      },
       hideAll() {
         for (let i = 0; i < this.showStatus.length; i++) {
           this.showStatus[i] = false;
@@ -166,9 +172,11 @@
               this.$message({
                 type: 'success',
                 message: '提交成功',
-                duration:1000
+                duration:2000
               });
-              location.reload();
+              // this.sleep(2000);
+              this.$router.push({path:'/pms/product'});
+              // location.reload();
             });
           }
         })

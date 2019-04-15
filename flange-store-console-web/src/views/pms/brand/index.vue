@@ -15,7 +15,7 @@
         <div style="margin-top: 15px">
           <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
             <el-form-item label="输入搜索：">
-              <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="品牌名称/关键字"></el-input>
+              <el-input style="width: 203px" v-model="listQuery.keyword" placeholder="出版社名称/关键字"></el-input>
             </el-form-item>
           </el-form>
         </div>
@@ -41,16 +41,16 @@
         <el-table-column label="编号" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="品牌名称" align="center">
+        <el-table-column label="出版社名称" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="品牌首字母" width="100" align="center">
+        <!-- <el-table-column label="出版社首字母" width="100" align="center">
           <template slot-scope="scope">{{scope.row.firstLetter}}</template>
         </el-table-column>
         <el-table-column label="排序" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sort}}</template>
-        </el-table-column>
-        <el-table-column label="品牌制造商" width="100" align="center">
+        </el-table-column> -->
+        <!-- <el-table-column label="出版社制造商" width="100" align="center">
           <template slot-scope="scope">
             <el-switch
               @change="handleFactoryStatusChange(scope.$index, scope.row)"
@@ -59,8 +59,8 @@
               v-model="scope.row.factoryStatus">
             </el-switch>
           </template>
-        </el-table-column>
-        <el-table-column label="是否显示" width="100" align="center">
+        </el-table-column> -->
+        <el-table-column label="是否显示" width="200" align="center">
           <template slot-scope="scope">
             <el-switch
               @change="handleShowStatusChange(scope.$index, scope.row)"
@@ -70,7 +70,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="相关" width="220" align="center">
+        <!-- <el-table-column label="相关" width="220" align="center">
           <template slot-scope="scope">
             <span>商品：</span>
             <el-button
@@ -85,8 +85,8 @@
               @click="getProductCommentList(scope.$index, scope.row)">1000
             </el-button>
           </template>
-        </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
+        </el-table-column> -->
+        <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
@@ -144,11 +144,11 @@
       return {
         operates: [
           {
-            label: "显示品牌",
+            label: "显示出版社",
             value: "showBrand"
           },
           {
-            label: "隐藏品牌",
+            label: "隐藏出版社",
             value: "hideBrand"
           }
         ],
@@ -185,7 +185,7 @@
         this.$router.push({path: '/pms/updateBrand', query: {id: row.id}})
       },
       handleDelete(index, row) {
-        this.$confirm('是否要删除该品牌', '提示', {
+        this.$confirm('是否要删除该出版社', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
