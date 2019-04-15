@@ -36,9 +36,9 @@
           <el-radio :label="0">否</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="分类图标：">
+      <!-- <el-form-item label="分类图标：">
         <single-upload v-model="productCate.icon"></single-upload>
-      </el-form-item>
+      </el-form-item> -->
       <!-- <el-form-item v-for="(filterProductAttr, index) in filterProductAttrList"
                     :label="index | filterLabelFilter"
                     :key="filterProductAttr.key"
@@ -80,7 +80,7 @@
     name: '',
     navStatus: 0,
     parentId: 0,
-    productUnit: '',
+    productUnit: '本',
     showStatus: 0,
     sort: 0,
     productAttributeIdList: []

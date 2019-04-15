@@ -60,10 +60,10 @@
               :disabled="scope.row.level | disableNextLevel"
               @click="handleShowNextLevel(scope.$index, scope.row)">查看下级
             </el-button>
-            <el-button
+            <!-- <el-button
               size="mini"
               @click="handleTransferProduct(scope.$index, scope.row)">转移商品
-            </el-button>
+            </el-button> -->
           </template>
         </el-table-column>
         <el-table-column label="操作" width="200" align="center">
@@ -103,7 +103,7 @@
     name: "productCateList",
     data() {
       return {
-        list: null,
+        list: [],
         total: null,
         listLoading: true,
         listQuery: {
@@ -180,6 +180,7 @@
         });
       },
       handleShowNextLevel(index, row) {
+        this.listQuery.pageNum = 1;
         this.$router.push({path: '/pms/productCate', query: {parentId: row.id}})
       },
       handleTransferProduct(index, row) {
@@ -189,6 +190,7 @@
         this.$router.push({path:'/pms/updateProductCate',query:{id:row.id}});
       },
       handleDelete(index, row) {
+        let self = this;
         this.$confirm('是否要删除该品牌', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
@@ -200,6 +202,9 @@
               type: 'success',
               duration: 1000
             });
+            if(self.list.length === 1 && self.listQuery.pageNum > 1){
+              self.listQuery.pageNum--;
+            }
             this.getList();
           });
         });
