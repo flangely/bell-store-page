@@ -3,7 +3,6 @@
     <el-upload
       action="/image/upload"
       :data="dataObj"
-      :multiple=true
       list-type="picture-card"
       :file-list="fileList"
       :on-remove="handleRemove"
@@ -37,12 +36,15 @@
     data() {
       return {
         dataObj: {
-          policy: '',
-          signature: '',
-          key: '',
-          ossaccessKeyId: '',
-          dir: '',
-          host: ''
+          // policy: '',
+          // signature: '',
+          // key: '',
+          // ossaccessKeyId: '',
+          // dir: '',
+          // host: ''
+          url: '',
+          hasSuccess:false,
+          uid:''
         },
         dialogVisible: false,
         dialogImageUrl:null
@@ -98,6 +100,12 @@
       //   //   console.log(res.data);
       //   // });
 
+      // },
+
+      // beforeUpload(file){
+      //   const fileName = file.uid;
+      //   this.listObj[fileName] = {};
+      //   this.listObj[fileName] = {uid:fileName, hasSuccess:false, url:''};
       // },
       handleUploadSuccess(res, file) {
         this.fileList.push({url:res.data});

@@ -198,10 +198,10 @@
       selectProductPics:{
         get:function () {
           let pics=[];
-          if(this.value.pic===undefined||this.value.pic==null||this.value.pic===''){
+          if(this.value.pictureUrl===undefined||this.value.pictureUrl==null||this.value.pictureUrl===''){
             return pics;
           }
-          pics.push(this.value.pic);
+          pics.push(this.value.pictureUrl);
           if(this.value.albumPics===undefined||this.value.albumPics==null||this.value.albumPics===''){
             return pics;
           }
@@ -217,6 +217,7 @@
             this.value.albumPics = null;
           } else {
             this.value.pic = newValue[0];
+            this.value.pictureUrl = newValue[0];
             this.value.albumPics = '';
             if (newValue.length > 1) {
               for (let i = 1; i < newValue.length; i++) {
