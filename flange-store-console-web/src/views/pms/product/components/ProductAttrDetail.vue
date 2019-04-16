@@ -216,7 +216,7 @@
             this.value.pic = null;
             this.value.albumPics = null;
           } else {
-            this.value.pic = newValue[0];
+            // this.value.pic = newValue[0];
             this.value.pictureUrl = newValue[0];
             this.value.albumPics = '';
             if (newValue.length > 1) {

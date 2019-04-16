@@ -73,7 +73,11 @@
         this.$emit('input', value)
       },
       handleRemove(file, fileList) {
-        this.delFileUrl = file.response.data;
+        if(file.url !== undefined){
+          this.delFileUrl = file.url;
+        }else{
+          this.delFileUrl = file.response.data;
+        }
         this.emitInput(fileList);
       },
       handlePreview(file) {
