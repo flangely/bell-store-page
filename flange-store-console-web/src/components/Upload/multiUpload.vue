@@ -47,7 +47,8 @@
           uid:''
         },
         dialogVisible: false,
-        dialogImageUrl:null
+        dialogImageUrl:null,
+        delFileUrl:''
       };
     },
     computed: {
@@ -65,14 +66,27 @@
         for(let i=0;i<fileList.length;i++){
           value.push(fileList[i].url);
         }
+        if(this.delFileUrl !== null && this.delFileUrl !== '' && this.delFileUrl.length > 0){
+          this.removeFromFileList(this.delFileUrl);
+          this.delFileUrl = '';
+        }
         this.$emit('input', value)
       },
       handleRemove(file, fileList) {
+        this.delFileUrl = file.response.data;
         this.emitInput(fileList);
       },
       handlePreview(file) {
         this.dialogVisible = true;
         this.dialogImageUrl=file.url;
+      },
+      removeFromFileList(url){
+        let list = this.fileList;
+        list.map((item, index) => {
+          if(item.url === url){
+            list.splice(index, 1);
+          }
+        })
       },
       // beforeUpload(file) {
       //   let _self = this;
