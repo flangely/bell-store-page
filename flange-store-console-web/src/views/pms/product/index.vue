@@ -642,8 +642,17 @@
             type: 'success',
             duration: 1000
           });
+          this.list.map((item, index) => {
+            ids.map((id, num) => {
+              if(item.id === id){
+                this.list.splice(index, 1);
+                // console.log(this.list);
+                this.total--;
+              }
+            })
+          })
         });
-        this.getList();
+        // this.getList();
       }
     }
   }
