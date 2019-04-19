@@ -1,70 +1,134 @@
 <template>
-    <div>
-        <v-header></v-header>
-        <div class="search">
-          <a href="localhost:8083/test/test"><img src="https://image4.suning.cn/uimg/cms/img/155540698836163295.png" style="width:190px; height:90px;"></a>
-          <div class="search-input">
-            <span>
-              <el-autocomplete 
-              v-model="state"
-              :fetch-suggestions="querySearchAsync"
-              placeholder="请输入内容"
-              @select="handleSelect"
-              style="width:480px"
-              ></el-autocomplete>
-              <el-button type="primary" icon="el-icon-search">搜索</el-button>
-            </span>
-          </div>
-          
-        </div>
-        <div class="carousel">
-          <el-carousel indicator-position="outside" height="350px">
-          <el-carousel-item v-for="item in 4" :key="item">
-          <h3>{{ item }}</h3>
-          </el-carousel-item>
-          </el-carousel>
-        </div>
+  <div>
+    <v-header></v-header>
+    <div class="search" style="padding:1%">
+      <el-row>
+        <el-col :span="6" style="padding-left:5%">
+          <a href="localhost:8083/test/test">
+            <img
+              src="https://image4.suning.cn/uimg/cms/img/155540698836163295.png"
+              style="width:190px; height:90px;"
+            >
+          </a>
+        </el-col>
+        <el-col :span="12" align="center">
+          <el-autocomplete placeholder="请输入内容" style="width:480px;padding-top: 25px"></el-autocomplete>
+          <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        </el-col>
+      </el-row>
     </div>
-  
+    <div class="carousel" style="padding-left:8%; padding-right:8%">
+      <el-row :gutter="10">
+        <!-- <el-col :span=1.5><div style="width:100px; height:100px"></div></el-col> -->
+        <el-col :span="4">
+          <el-menu
+            class="navbar"
+            mode="vertical"
+            background-color="#f5f5f5"
+            text-color="#333"
+            width="400px"
+            active-text-color="#ee840b"
+          >
+            <el-menu-item index="1">分类1</el-menu-item>
+            <el-menu-item index="2" width="100%">分类2</el-menu-item>
+            <el-menu-item index="3">分类3</el-menu-item>
+            <el-menu-item index="4">分类4</el-menu-item>
+          </el-menu>
+        </el-col>
+        <el-col :span="16">
+          <el-carousel indicator-position="outside" height="400px">
+            <el-carousel-item v-for="item in 4" :key="item">
+              <!-- <h3>{{ item }}</h3> -->
+              <img
+                src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=857048244,1615709237&fm=27&gp=0.jpg"
+                width="100%"
+                hetght="100%"
+              >
+            </el-carousel-item>
+          </el-carousel>
+        </el-col>
+        <el-col :span="4">
+          <div style="width:100%; height:300px; background-color:red">书讯速递</div>
+        </el-col>
+      </el-row>
+    </div>
+    <div style="padding:1%">
+      <el-row :gutter="10" style="padding-right:7%">
+        <el-col :span="5">
+          <el-form status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="关键字" prop="pass">
+              <el-input type="password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="作者" prop="checkPass">
+              <el-input type="password" autocomplete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="价格" prop="age">
+              <el-input></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submitForm('ruleForm')">搜索</el-button>
+            </el-form-item>
+          </el-form>
+        </el-col>
+        <el-col :span="19" align="center">
+          <el-tabs value="first" type="border-card">
+            <el-tab-pane label="新书上架" name="first">
+              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3>{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </el-tab-pane>
+            <el-tab-pane label="经典畅销" name="second">
+              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3>{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </el-tab-pane>
+            <el-tab-pane label="热门推荐" name="third">
+              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3>{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </el-tab-pane>
+            <el-tab-pane label="主编推荐" name="fourth">
+              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
+                <el-carousel-item v-for="item in 4" :key="item">
+                  <h3>{{ item }}</h3>
+                </el-carousel-item>
+              </el-carousel>
+            </el-tab-pane>
+          </el-tabs>
+        </el-col>
+      </el-row>
+    </div>
+  </div>
 </template>
 <script>
-import Header from '@/components/navigator/Header'
+import Header from "@/components/navigator/Header";
 export default {
-  components:{
-    'v-header': Header
+  components: {
+    "v-header": Header
   }
-    
-}
+};
 </script>
 
 <style>
-  .el-carousel__item h3 {
-    color: #475669;
-    font-size: 18px;
-    opacity: 0.75;
-    line-height: 300px;
-    margin: 0;
-  }
-  
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-  
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
-  }
-  .carousel{
-    width: 740px;
-    height: 350px;
-    margin:0 auto;
-  }
-  .search{
-    height: 120px;
-    margin-left: 50px;
-  }
-  .search-input{
-      position: relative;
-      left: 350px;
-      top: -55px;
-    }
+.el-carousel__item h3 {
+  color: #475669;
+  font-size: 18px;
+  opacity: 0.75;
+  line-height: 400px;
+  margin: 0;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
 </style>
