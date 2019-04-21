@@ -36,14 +36,34 @@
           </el-menu>
         </el-col>
         <el-col :span="16">
-          <el-carousel indicator-position="outside" height="400px">
-            <el-carousel-item v-for="item in 4" :key="item">
+          <el-carousel indicator-position="outside" interval="5000" height="400px">
+            <el-carousel-item key="1">
               <!-- <h3>{{ item }}</h3> -->
               <img
-                src="https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=857048244,1615709237&fm=27&gp=0.jpg"
+                src="~@/assets/images/snow01.jpg"
                 width="100%"
-                hetght="100%"
-              >
+                hetght="100%">
+            </el-carousel-item>
+            <el-carousel-item key="2">
+              <!-- <h3>{{ item }}</h3> -->
+              <img
+                src="~@/assets/images/snow02.jpg"
+                width="100%"
+                hetght="100%">
+            </el-carousel-item>
+            <el-carousel-item key="3">
+              <!-- <h3>{{ item }}</h3> -->
+              <img
+                src="~@/assets/images/snow03.jpg"
+                width="100%"
+                hetght="100%">
+            </el-carousel-item>
+            <el-carousel-item key="4">
+              <!-- <h3>{{ item }}</h3> -->
+              <img
+                src="~@/assets/images/snow04.jpg"
+                width="100%"
+                hetght="100%">
             </el-carousel-item>
           </el-carousel>
         </el-col>

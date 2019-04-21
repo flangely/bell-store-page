@@ -1,6 +1,8 @@
 export function isvalidUsername(str) {
-  const valid_map = ['admin', 'test']
-  return valid_map.indexOf(str.trim()) >= 0
+  // const valid_map = ['admin', 'test']
+  const valid_reg = /^.{3,18}$/
+  // return valid_map.indexOf(str.trim()) >= 0
+  return valid_reg.test(str)
 }
 
 /* 合法uri*/
