@@ -37,38 +37,19 @@
         </el-col>
         <el-col :span="16">
           <el-carousel indicator-position="outside" :interval="5000" height="400px">
-            <el-carousel-item key="1">
-              <!-- <h3>{{ item }}</h3> -->
-              <img
-                src="~@/assets/images/snow01.jpg"
-                width="100%"
-                hetght="100%">
-            </el-carousel-item>
-            <el-carousel-item key="2">
-              <!-- <h3>{{ item }}</h3> -->
-              <img
-                src="~@/assets/images/snow02.jpg"
-                width="100%"
-                hetght="100%">
-            </el-carousel-item>
-            <el-carousel-item key="3">
-              <!-- <h3>{{ item }}</h3> -->
-              <img
-                src="~@/assets/images/snow03.jpg"
-                width="100%"
-                hetght="100%">
-            </el-carousel-item>
-            <el-carousel-item key="4">
-              <!-- <h3>{{ item }}</h3> -->
-              <img
-                src="~@/assets/images/snow04.jpg"
-                width="100%"
-                hetght="100%">
+            <el-carousel-item v-for="item in advertiseList" :key="advertiseList.id">
+              <a :href="item.url" target="_blank">
+                <img :src="item.pic" width="100%" height="100%">
+              </a>
             </el-carousel-item>
           </el-carousel>
         </el-col>
-        <el-col :span="4">
-          <div style="width:100%; height:300px; background-color:red">书讯速递</div>
+        <el-col :span="4" >
+          <!-- <div style="width:100%; height:300px; color:D2FCED">出版社</div> -->
+          <el-card class="box-card" body-style="background-color:#e6e6e6;height:100%">
+            <div style="color:#f3b12b;text-align:center;padding-bottom:10px">热门出版社</div>
+            <div v-for="item in brandList" :key="brandList.id" class="text item"><a style="text-decoration:none" href="item.id" target="_blank">{{item.name}}</a></div>
+          </el-card>
         </el-col>
       </el-row>
     </div>
@@ -128,9 +109,31 @@
 </template>
 <script>
 import Header from "@/components/navigator/Header";
+import { homeContent } from "@/api/home";
 export default {
   components: {
     "v-header": Header
+  },
+  data() {
+    return {
+      advertiseList: [],
+      brandList: [],
+      newProductList: [],
+      hotProductList: []
+    };
+  },
+  methods: {
+    getHomeContent() {
+      homeContent().then(response => {
+        this.advertiseList = response.data.advertiseList;
+        this.brandList = response.data.brandList;
+        this.newProductList = response.data.newProductList;
+        this.hotProductList = response.data.hotProductList;
+      });
+    }
+  },
+  created() {
+    this.getHomeContent();
   }
 };
 </script>
@@ -151,4 +154,16 @@ export default {
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }
+.text {
+    font-size: 14px;
+  }
+
+  .item {
+    padding: 10px 0;
+  }
+  .box-card {
+    width: 100%;
+    height: 300px;
+  }
+a:hover {color:#ffaa01}
 </style>
