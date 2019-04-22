@@ -36,7 +36,7 @@
           </el-menu>
         </el-col>
         <el-col :span="16">
-          <el-carousel indicator-position="outside" interval="5000" height="400px">
+          <el-carousel indicator-position="outside" :interval="5000" height="400px">
             <el-carousel-item key="1">
               <!-- <h3>{{ item }}</h3> -->
               <img

@@ -4,6 +4,7 @@
       <el-form
         autocomplete="on"
         :model="loginForm"
+        :rules="loginRules"
         ref="loginForm"
         label-position="left"
       >
@@ -30,7 +31,7 @@
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button style="width:100%" :loading="loading" type="primary" round>登录</el-button>
+            <el-button style="width:100%" :loading="loading" @click="handleLogin" type="primary" round>登录</el-button>
           </el-form-item>
         </div>
       </el-form>
@@ -40,13 +41,32 @@
 </template>
 <script>
 import login_center_bg from "@/assets/images/login_center_bg.jpg";
+import {isvalidUsername} from '@/utils/validate';
 export default {
   data() {
+    const validateUsername = (rule, value ,callback) => {
+      if(!isvalidUsername(value)){
+        callback(new Error('请输入正确的用户名'));
+      }else{
+        callback();
+      }
+    };
+    const validatePass = (rule, value, callback) => {
+      if(value.length < 3){
+        callback(new Error('密码不能小于3位'));
+      }else{
+        callback();
+      }
+    }
     return {
       loginForm: {
         username: '',
         password: ''
       },
+      loginRules: {
+          username: [{required: true, trigger: 'blur', validator: validateUsername}],
+          password: [{required: true, trigger: 'blur', validator: validatePass}]
+        },
       loading: false,
       login_center_bg,
       password: 'password'
@@ -54,8 +74,19 @@ export default {
   },
   methods: {
     handleLogin() {
-      this.$message("你好");
-      this.loading = true;
+      this.$refs.loginForm.validate(valid => {
+        if(valid){
+          this.loading = true;
+          this.$store.dispatch('Login', this.loginForm).then(() => {
+            this.loading = false;
+            this.$router.push({path:'/'});
+          }).catch(() => {
+            this.loading = false;
+          })
+        }else{
+
+        }
+      })
     },
     showPwd(){
       if(this.password === 'password'){
@@ -63,7 +94,7 @@ export default {
       }else{
         this.password = 'password';
       }
-    }
+    },
   }
 };
 </script>

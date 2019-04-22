@@ -23,7 +23,7 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="3">客服服务</el-menu-item>
-      <el-menu-item index="4" style="margin-left:40%">登录</el-menu-item>
+      <el-menu-item index="4" @click="toLogin()" style="margin-left:40%">登录</el-menu-item>
       <el-menu-item index="5">注册</el-menu-item>
       <el-menu-item index="6">我的订单</el-menu-item>
       <el-menu-item index="7">购物车</el-menu-item>
@@ -41,6 +41,9 @@
     methods: {
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
+      },
+      toLogin(){
+        this.$router.push({path: '/login'});
       }
     }
   }
