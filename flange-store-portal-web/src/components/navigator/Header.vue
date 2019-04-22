@@ -23,19 +23,26 @@
         </el-submenu>
       </el-submenu>
       <el-menu-item index="3">客服服务</el-menu-item>
-      <el-menu-item index="4" @click="toLogin()" style="margin-left:40%">登录</el-menu-item>
-      <el-menu-item index="5">注册</el-menu-item>
+      <el-menu-item index="4" v-if="username === ''" @click="toLogin()" style="margin-left:40%" >登录</el-menu-item>
+      <el-menu-item index="5" v-if="username === ''">注册</el-menu-item>
+      <el-submenu index="4" style="margin-left:40%" v-if="username !== ''">
+          <template slot="title">你好！{{username}}</template>
+          <el-menu-item index="4-1">账号管理</el-menu-item>
+          <el-menu-item index="4-2" @click="loginOut">退出登录</el-menu-item>
+        </el-submenu>
       <el-menu-item index="6">我的订单</el-menu-item>
       <el-menu-item index="7">购物车</el-menu-item>
     </el-menu>
   </div>
 </template>
 <script>
+import {getInfo} from '@/api/login'
   export default {
     data() {
       return {
         activeIndex: '1',
-        activeIndex2: '1'
+        activeIndex2: '1',
+        username:''
       };
     },
     methods: {
@@ -44,6 +51,21 @@
       },
       toLogin(){
         this.$router.push({path: '/login'});
+      },
+      getUserInfo(){
+        this.$store.dispatch('GetInfo').then(res => {
+          this.username = this.$store.state.user.name;
+        })
+      },
+      loginOut(){
+        this.$store.dispatch('LogOut').then(() => {
+        location.reload();
+        })
+      }
+    },
+    created(){
+      if(this.$store.state.user.token !== undefined){
+        this.getUserInfo();
       }
     }
   }
