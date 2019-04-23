@@ -13,7 +13,7 @@
             width="400px"
             active-text-color="#ee840b"
           >
-            <div style="font-size:16px;text-align:center;padding:20px;background:#F80;color:#FFF">书籍分类</div>
+            <div style="font-size:16px;text-align:center;padding:15px;background:#F80;color:#FFF">书籍分类</div>
             <el-menu-item v-for="item in productCategoryList" :key="productCategoryList.id">{{item.name}}</el-menu-item>
           </el-menu>
         </el-col>
@@ -55,34 +55,67 @@
             </el-form-item>
           </el-form>
         </el-col>
-        <el-col :span="19" align="center">
+        <el-col :span="19" align="center" class="list-product">
           <el-tabs value="first" type="border-card">
             <el-tab-pane label="新书上架" name="first">
               <el-carousel indicator-position="outside" :autoplay="false" height="300px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <h3>{{ item }}</h3>
+                <el-carousel-item>
+                  <ul>
+                    <li v-for="item in newProductList01">
+                      <div style="width:120px;height:150px">
+                        <div>
+                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        </div>
+                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
+                      </div>
+                    </li>
+                  </ul>
                 </el-carousel-item>
+                <div v-if="newProductList02.length>0">
+                  <el-carousel-item>
+                    <ul>
+                      <li v-for="item in newProductList02">
+                      <div style="width:120px;height:150px">
+                        <div>
+                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        </div>
+                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
+                      </div>
+                      </li>
+                    </ul>
+                  </el-carousel-item>
+                </div>
               </el-carousel>
             </el-tab-pane>
-            <el-tab-pane label="经典畅销" name="second">
+            <el-tab-pane label="人气推荐" name="second">
               <el-carousel indicator-position="outside" :autoplay="false" height="300px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <h3>{{ item }}</h3>
+                <el-carousel-item>
+                  <ul>
+                    <li v-for="item in hotProductList01">
+                      <div style="width:120px;height:150px">
+                        <div>
+                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        </div>
+                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
+                      </div>
+                    </li>
+                  </ul>
                 </el-carousel-item>
+                <div v-if="hotProductList02.length>0">
+                  <el-carousel-item>
+                    <ul>
+                      <li v-for="item in hotProductList02">
+                      <div style="width:120px;height:150px">
+                        <div>
+                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        </div>
+                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
+                      </div>
+                      </li>
+                    </ul>
+                  </el-carousel-item>
+                </div>
               </el-carousel>
-            </el-tab-pane>
-            <el-tab-pane label="热门推荐" name="third">
-              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <h3>{{ item }}</h3>
-                </el-carousel-item>
-              </el-carousel>
-            </el-tab-pane>
-            <el-tab-pane label="主编推荐" name="fourth">
-              <el-carousel indicator-position="outside" :autoplay="false" height="300px">
-                <el-carousel-item v-for="item in 4" :key="item">
-                  <h3>{{ item }}</h3>
-                </el-carousel-item>
               </el-carousel>
             </el-tab-pane>
           </el-tabs>
@@ -105,8 +138,11 @@ export default {
       advertiseList: [],
       brandList: [],
       newProductList: [],
+      newProductList01: [],
+      newProductList02: [],
       hotProductList: [],
-      rcommendProductList: [],
+      hotProductList01: [],
+      hotProductList02: [],
       productCategoryList: []
     };
   },
@@ -116,7 +152,19 @@ export default {
         this.advertiseList = response.data.advertiseList;
         this.brandList = response.data.brandList;
         this.newProductList = response.data.newProductList;
+        if(this.newProductList.length > 6){
+          this.newProductList01 = this.newProductList.slice(0, 6);
+          this.newProductList02 = this.newProductList.slice(6, this.newProductList.length);
+        }else{
+          this.newProductList01 = this.newProductList;
+        }
         this.hotProductList = response.data.hotProductList;
+        if(this.hotProductList.length > 6){
+          this.hotProductList01 = this.hotProductList.slice(0, 6);
+          this.hotProductList02 = this.hotProductList.slice(6, this.hotProductList.length);
+        }else{
+          this.hotProductList01 = this.hotProductList;
+        }
       });
     },
     getHomeRecommendProductList(){
@@ -148,11 +196,11 @@ export default {
 }
 
 .el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
+  background-color: #ffffff;
 }
 
 .el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
+  background-color: #ffffff;
 }
 .text {
     font-size: 14px;
@@ -173,5 +221,16 @@ export default {
 .item a:hover {color:#ffaa01}
 .el-card__body{
   padding: 0;
+}
+.list-product ul{
+    list-style: none;
+    line-height: 40px;
+    margin-left: 50px;
+}
+.list-product li{
+    display: block;
+    float: left;
+    padding-left:8px;
+    padding-top:50px
 }
 </style>

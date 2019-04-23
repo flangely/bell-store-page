@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex2"
+
       class="navbar"
       mode="horizontal"
       @select="handleSelect"
