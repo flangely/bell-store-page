@@ -6,3 +6,17 @@ export function homeContent(){
         method: 'get'
     })
 }
+
+export function homeRcommendProductList(){
+    return request({
+        url:'/home/recommendProductList',
+        method:'get'
+    })
+}
+
+export function homeProductCategory(id){
+    return request({
+        url:'/home/productCateList/' + id,
+        method:'get'
+    })
+}

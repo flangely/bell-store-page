@@ -1,38 +1,20 @@
 <template>
   <div>
     <v-header></v-header>
-    <div class="search" style="padding:1%">
-      <el-row>
-        <el-col :span="6" style="padding-left:5%">
-          <a href="localhost:8083/test/test">
-            <img
-              src="https://image4.suning.cn/uimg/cms/img/155540698836163295.png"
-              style="width:190px; height:90px;"
-            >
-          </a>
-        </el-col>
-        <el-col :span="12" align="center">
-          <el-autocomplete placeholder="请输入内容" style="width:480px;padding-top: 25px"></el-autocomplete>
-          <el-button type="primary" icon="el-icon-search">搜索</el-button>
-        </el-col>
-      </el-row>
-    </div>
+    <v-search></v-search>
     <div class="carousel" style="padding-left:8%; padding-right:8%">
       <el-row :gutter="10">
         <!-- <el-col :span=1.5><div style="width:100px; height:100px"></div></el-col> -->
         <el-col :span="4">
-          <el-menu
-            class="navbar"
+            <el-menu
             mode="vertical"
             background-color="#f5f5f5"
             text-color="#333"
             width="400px"
             active-text-color="#ee840b"
           >
-            <el-menu-item index="1">分类1</el-menu-item>
-            <el-menu-item index="2" width="100%">分类2</el-menu-item>
-            <el-menu-item index="3">分类3</el-menu-item>
-            <el-menu-item index="4">分类4</el-menu-item>
+            <div style="font-size:16px;text-align:center;padding:20px;background:#F80;color:#FFF">书籍分类</div>
+            <el-menu-item v-for="item in productCategoryList" :key="productCategoryList.id">{{item.name}}</el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="16">
@@ -47,8 +29,10 @@
         <el-col :span="4" >
           <!-- <div style="width:100%; height:300px; color:D2FCED">出版社</div> -->
           <el-card class="box-card" body-style="background-color:#e6e6e6;height:100%">
-            <div style="color:#f3b12b;text-align:center;padding-bottom:10px">热门出版社</div>
-            <div v-for="item in brandList" :key="brandList.id" class="text item"><a style="text-decoration:none" href="item.id" target="_blank">{{item.name}}</a></div>
+            <div style="color:#FFF;text-align:center;background:#f5b361;height:50px;line-height:50px">热门出版社</div>
+            <ul>
+              <div v-for="item in brandList" :key="brandList.id" class="text item"><li><a href="item.id" target="_blank">{{item.name}}</a></li></div>
+            </ul>
           </el-card>
         </el-col>
       </el-row>
@@ -109,17 +93,21 @@
 </template>
 <script>
 import Header from "@/components/navigator/Header";
-import { homeContent } from "@/api/home";
+import Search from "@/components/search/Search";
+import { homeContent, homeRcommendProductList, homeProductCategory} from "@/api/home";
 export default {
   components: {
-    "v-header": Header
+    'v-header': Header,
+    'v-search': Search
   },
   data() {
     return {
       advertiseList: [],
       brandList: [],
       newProductList: [],
-      hotProductList: []
+      hotProductList: [],
+      rcommendProductList: [],
+      productCategoryList: []
     };
   },
   methods: {
@@ -130,10 +118,22 @@ export default {
         this.newProductList = response.data.newProductList;
         this.hotProductList = response.data.hotProductList;
       });
+    },
+    getHomeRecommendProductList(){
+      homeRcommendProductList().then((response) => {
+        this.rcommendProductList = response.data;
+      })
+    },
+    getProductCategory(id){
+      homeProductCategory(id).then((response) => {
+        this.productCategoryList = response.data;
+      })
     }
   },
   created() {
     this.getHomeContent();
+    this.getHomeRecommendProductList();
+    this.getProductCategory(0);
   }
 };
 </script>
@@ -159,11 +159,19 @@ export default {
   }
 
   .item {
-    padding: 10px 0;
+    padding: 10px 8px;
+    font-size: 8px;
   }
+  .item a{
+      text-decoration:none;
+      color: black;
+    }
   .box-card {
     width: 100%;
     height: 300px;
   }
-a:hover {color:#ffaa01}
+.item a:hover {color:#ffaa01}
+.el-card__body{
+  padding: 0;
+}
 </style>
