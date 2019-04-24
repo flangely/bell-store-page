@@ -12,7 +12,7 @@
           v-for="(item, index) in bookList"
           :key="bookList.id"
         >
-          <el-card :body-style="{ padding: '0px',width:'230px',height:'410px'}">
+          <el-card :body-style="{ padding: '0px',width:'230px',height:'410px'}" v-bind="item">
             <img :src="item.pic" class="image">
             <div style="padding: 10px;text-align:center">
               <span v-if="item.name.length > 10">{{item.name.substring(0,10)}}...</span>
@@ -21,7 +21,8 @@
                 <el-row v-if="item.subTitle.length > 10">{{item.subTitle.substring(0, 10)}}...</el-row>
                 <el-row v-else>{{item.subTitle}}</el-row>
                 <el-row style="padding-top:8px">
-                  <el-button style="margin-left:12px;width:100%;height:40px" class="button" @click="collectProduct(item.id)">收藏</el-button>
+                  <el-button v-if="collected.indexOf(item.id) > -1" style="margin-left:12px;width:100%;height:40px" class="button" @click="cancelMyCollected(item.id)">取消收藏</el-button>
+                  <el-button v-else style="margin-left:12px;width:100%;height:40px" class="button" @click="collectProduct(item)">收藏</el-button>
                 </el-row>
                 <el-row style="padding-top:8px">
                   <el-button style="margin-left:12px;width:100%;height:40px" class="button" @click="addToCart(item.id)">加入购物车</el-button>
@@ -43,6 +44,7 @@
 import Header from "@/components/navigator/Header";
 import Search from "@/components/search/Search";
 import { simpleSearch, searchAllProduct } from "@/api/search";
+import {collectProduct, cancelCollect, listCollectProduct} from "@/api/collect"
 export default {
   data() {
     return {
@@ -53,7 +55,8 @@ export default {
       //当前页书籍拥有行数
       rowCount: 0,
       pageNum: 1,
-      key:''
+      key:'',
+      collected:[]
     };
   },
   components: {
@@ -88,15 +91,41 @@ export default {
 
     },
     collectProduct(val){
-        console.log(val);
+        collectProduct(val).then(response => {
+            this.$message({type:'success', message:'收藏成功'});
+            this.listMyCollectProduct();
+            // if(this.collected !== undefined && this.collected.length > 0 && this.collected.indexOf(val.id) < 0){
+            //     // this.collected.push(val.id);
+            // }
+        });
+    },
+    cancelMyCollected(val){
+        cancelCollect(val).then(response => {
+            // this.collected.map((value, index) => {
+            //     if(value === val){
+            //         this.collected.splice(index, 1);
+            //     }
+            // })
+            this.listMyCollectProduct();
+            this.$message("取消收藏成功");
+        })
     },
     addToCart(val){
 
+    },
+    listMyCollectProduct(){
+        listCollectProduct().then(response => {
+            this.$message('获取收藏列表成功');
+            this.collected = response.data.map((value,index) => {
+                return value.productId;
+            })
+        })
     }
   },
   created() {
     this.key = this.$route.params.keyword;
     this.simpleProductSearch(this.key);
+    this.listMyCollectProduct();
   }
 };
 </script>
