@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-header></v-header>
-    <v-search></v-search>
+    <v-search @simpleProductSearch="simpleProductSearch"></v-search>
     <div class="carousel" style="padding-left:8%; padding-right:8%">
       <el-row :gutter="10">
         <!-- <el-col :span=1.5><div style="width:100px; height:100px"></div></el-col> -->
@@ -51,7 +51,7 @@
               <el-input type="number" v-model="searchFormData.price"  placeholder="请输入价格"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitSearchForm('searchFormData')">搜索</el-button>
+              <el-button type="primary" @click="submitSearchForm">搜索</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -153,8 +153,15 @@ export default {
     };
   },
   methods: {
-    submitSearchForm(searchForm){
-
+    submitSearchForm(){
+      simpleSearch(this.searchFormData.keyword, 0, 5).then(response => {
+      console.log(response.data);
+      })
+    },
+    simpleProductSearch(keyword){
+      this.$router.push({name:'Search',params:{
+        keyword:keyword
+      }})
     },
     getHomeContent() {
       homeContent().then(response => {
@@ -191,9 +198,6 @@ export default {
     this.getHomeContent();
     this.getHomeRecommendProductList();
     this.getProductCategory(0);
-    simpleSearch('毛泽东', 0, 5).then(response => {
-      console.log(response.data);
-    })
   }
 };
 </script>

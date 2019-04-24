@@ -1,10 +1,11 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken, getKeyword, setKeyword, removeKeyword } from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
     name: '',
+    keyword: getKeyword()
   },
 
   mutations: {
@@ -14,6 +15,9 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
+    SET_KEYWORD: (state, keyword) => {
+      state.keyword = keyword
+    }
   },
 
   actions: {

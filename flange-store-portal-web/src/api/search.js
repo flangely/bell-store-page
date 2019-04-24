@@ -13,3 +13,10 @@ export function detailSearch(keyword, author, price, pageNum, pageSize){
         method:'get'
     })
 }
+
+export function searchAllProduct(pageNum, pageSize){
+    return searchRequest({
+        url:'/esProduct/search/simple?pageNum=' + pageNum + '&pageSize=' + pageSize,
+        method:'get'
+    })
+}
