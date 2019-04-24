@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login" v-cloak>
     <el-card class="login-form-layout">
       <el-form
         autocomplete="on"

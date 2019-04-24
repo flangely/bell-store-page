@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-    <router-link :to="{path:'/test'}"></router-link>
+  <div id="app" v-cloak>
     <router-view/>
   </div>
 </template>
@@ -16,5 +15,8 @@ export default {
 <style>
 body{
   margin:0;
+}
+[v-cloak] {
+  display:none !important;
 }
 </style>

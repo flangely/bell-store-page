@@ -40,18 +40,18 @@
     <div style="padding:1%">
       <el-row :gutter="10" style="padding-right:7%">
         <el-col :span="5">
-          <el-form status-icon ref="ruleForm" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="关键字" prop="pass">
-              <el-input type="password" autocomplete="off"></el-input>
+          <el-form :model="searchFormData" status-icon ref="searchForm" label-width="100px" class="demo-ruleForm">
+            <el-form-item label="关键字" prop="keyword">
+              <el-input v-model="searchFormData.keyword" placeholder="请输入关键字"></el-input>
             </el-form-item>
-            <el-form-item label="作者" prop="checkPass">
-              <el-input type="password" autocomplete="off"></el-input>
+            <el-form-item label="作者" prop="author">
+              <el-input v-model="searchFormData.author" placeholder="请输入作者" ></el-input>
             </el-form-item>
-            <el-form-item label="价格" prop="age">
-              <el-input></el-input>
+            <el-form-item label="价格" prop="price">
+              <el-input type="number" v-model="searchFormData.price"  placeholder="请输入价格"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm')">搜索</el-button>
+              <el-button type="primary" @click="submitSearchForm('searchFormData')">搜索</el-button>
             </el-form-item>
           </el-form>
         </el-col>
@@ -128,6 +128,7 @@
 import Header from "@/components/navigator/Header";
 import Search from "@/components/search/Search";
 import { homeContent, homeRcommendProductList, homeProductCategory} from "@/api/home";
+import {simpleSearch} from '@/api/search';
 export default {
   components: {
     'v-header': Header,
@@ -143,10 +144,18 @@ export default {
       hotProductList: [],
       hotProductList01: [],
       hotProductList02: [],
-      productCategoryList: []
+      productCategoryList: [],
+      searchFormData:{
+        keyword:'',
+        author:'',
+        price:''
+      }
     };
   },
   methods: {
+    submitSearchForm(searchForm){
+
+    },
     getHomeContent() {
       homeContent().then(response => {
         this.advertiseList = response.data.advertiseList;
@@ -182,6 +191,9 @@ export default {
     this.getHomeContent();
     this.getHomeRecommendProductList();
     this.getProductCategory(0);
+    simpleSearch('毛泽东', 0, 5).then(response => {
+      console.log(response.data);
+    })
   }
 };
 </script>

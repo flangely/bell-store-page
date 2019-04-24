@@ -4,5 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  BASE_API: '"http://localhost:8082/portal"'
+  BASE_API: '"http://localhost:8082/portal"',
+  SEARCH_BASE_API: '"http://localhost:8081/elsearch"'
 })
