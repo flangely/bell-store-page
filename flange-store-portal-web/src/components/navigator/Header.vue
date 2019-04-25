@@ -46,11 +46,11 @@ import {getInfo} from '@/api/login'
     },
     methods: {
       handleSelect(key, keyPath) {
-        console.log(key, keyPath);
+        // console.log(key, keyPath);
       },
       toHome(){
         this.$router.push({path:'/'});
-        location.reload();
+        // location.reload();
       },
       toLogin(){
         this.$router.push({path: '/login'});

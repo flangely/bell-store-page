@@ -10,7 +10,7 @@
           </a>
         </el-col>
         <el-col :span="12" align="center">
-          <el-autocomplete :fetch-suggestions="querySearch" placeholder="请输入关键字" v-model="keyword" style="width:480px;padding-top: 25px"></el-autocomplete>
+          <el-autocomplete :fetch-suggestions="querySearch" placeholder="请输入关键字" v-model="keyword" @keyup.enter.native="simpleProductSearch" style="width:480px;padding-top: 25px"></el-autocomplete>
           <el-button type="primary" icon="el-icon-search" @click="simpleProductSearch">搜索</el-button>
         </el-col>
       </el-row>

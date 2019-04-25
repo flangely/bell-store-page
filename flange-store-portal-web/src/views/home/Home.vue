@@ -159,9 +159,11 @@ export default {
       })
     },
     simpleProductSearch(keyword){
-      this.$router.push({name:'Search',params:{
+      if(keyword){
+        this.$router.push({name:'Search',params:{
         keyword:keyword
       }})
+      }
     },
     getHomeContent() {
       homeContent().then(response => {

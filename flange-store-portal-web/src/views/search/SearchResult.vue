@@ -56,7 +56,8 @@ export default {
       rowCount: 0,
       pageNum: 1,
       key:'',
-      collected:[]
+      collected:[],
+      username:''
     };
   },
   components: {
@@ -91,6 +92,7 @@ export default {
 
     },
     collectProduct(val){
+      if(this.username){
         collectProduct(val).then(response => {
             this.$message({type:'success', message:'收藏成功'});
             this.listMyCollectProduct();
@@ -98,8 +100,13 @@ export default {
             //     // this.collected.push(val.id);
             // }
         });
+      }else{
+        this.$message({type:'warning', message:'请先登录'});
+      }
+        
     },
     cancelMyCollected(val){
+      if(this.username){
         cancelCollect(val).then(response => {
             // this.collected.map((value, index) => {
             //     if(value === val){
@@ -107,25 +114,36 @@ export default {
             //     }
             // })
             this.listMyCollectProduct();
-            this.$message("取消收藏成功");
+            this.$message({type:'success', message:'取消收藏成功'});
         })
+      }else{
+        this.$message({type:'warning', message:'请先登录'});
+      }
     },
     addToCart(val){
 
     },
     listMyCollectProduct(){
         listCollectProduct().then(response => {
-            this.$message('获取收藏列表成功');
             this.collected = response.data.map((value,index) => {
                 return value.productId;
             })
+        })
+    },
+    getUserInfo(){
+        this.$store.dispatch('GetInfo').then(res => {
+          this.username = this.$store.state.user.name;
         })
     }
   },
   created() {
     this.key = this.$route.params.keyword;
     this.simpleProductSearch(this.key);
-    this.listMyCollectProduct();
+    if(this.$store.state.user.token !== undefined){
+        this.getUserInfo();
+        this.listMyCollectProduct();
+    }
+
   }
 };
 </script>
