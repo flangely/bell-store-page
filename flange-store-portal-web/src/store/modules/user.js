@@ -1,11 +1,11 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken, getKeyword, setKeyword, removeKeyword } from '@/utils/auth'
+import { getToken, setToken, removeToken, getUsername, setUsername, removeUsername,getMemberId, setMemberId, removeMemberId} from '@/utils/auth'
 
 const user = {
   state: {
     token: getToken(),
-    name: '',
-    keyword: getKeyword()
+    name: getUsername(),
+    memberId: getMemberId()
   },
 
   mutations: {
@@ -15,8 +15,8 @@ const user = {
     SET_NAME: (state, name) => {
       state.name = name
     },
-    SET_KEYWORD: (state, keyword) => {
-      state.keyword = keyword
+    SET_MEMBERID: (state, memberId) => {
+      state.memberId = memberId
     }
   },
 
@@ -29,8 +29,11 @@ const user = {
           const data = response.data
           const tokenStr = data.tokenHead+data.token
           setToken(tokenStr)
+          setUsername(username)
+          setMemberId(data.memberId)
           commit('SET_TOKEN', tokenStr)
           commit('SET_NAME', username)
+          commit('SET_MEMBERID', data.memberId)
           resolve()
         }).catch(error => {
           reject(error)
@@ -62,7 +65,11 @@ const user = {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_TOKEN', '')
+          commit('SET_NAME', '')
+          commit('SET_MEMBERID', '')
           removeToken()
+          removeUsername()
+          removeMemberId()
           resolve()
         }).catch(error => {
           reject(error)
@@ -74,6 +81,8 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_TOKEN', '')
+        commit('SET_NAME', '')
+        commit('SET_MEMBERID', '')
         removeToken()
         resolve()
       })

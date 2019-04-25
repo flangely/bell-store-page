@@ -49,6 +49,7 @@ import Header from "@/components/navigator/Header";
 import Search from "@/components/search/Search";
 import { simpleSearch, searchAllProduct } from "@/api/search";
 import {collectProduct, cancelCollect, listCollectProduct} from "@/api/collect"
+import {addOne} from "@/api/cart"
 export default {
   data() {
     return {
@@ -61,7 +62,8 @@ export default {
       pageNum: 1,
       key:'',
       collected:[],
-      username:''
+      username:'',
+      cartItemList:[]
     };
   },
   components: {
@@ -125,7 +127,12 @@ export default {
       }
     },
     addToCart(val){
-
+      let map = {};
+      map.productId = val;
+      map.quantity = 1;
+      addOne(map).then(response => {
+        this.$message({type:'success',message:'加入购物车成功'});
+      })
     },
     listMyCollectProduct(){
         listCollectProduct().then(response => {
@@ -139,6 +146,11 @@ export default {
           this.username = this.$store.state.user.name;
         })
     },
+    // getMyCartItem(){
+    //     listAll().then(response => {
+    //       this.cartItemList = response.data;
+    //     })
+    // }
     // toProductDetail(productId){
     //   this.$router.push({name:'Product', params:{
     //     productId:productId

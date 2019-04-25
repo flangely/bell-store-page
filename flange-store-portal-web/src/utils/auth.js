@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'loginTokenPortal'
-const Keyword = 'keyword'
+const username = 'loginName'
+const memberId = 'loginId'
 
 export function getToken() {
   return Cookies.get(TokenKey)
@@ -15,14 +16,26 @@ export function removeToken() {
   return Cookies.remove(TokenKey)
 }
 
-export function getKeyword(){
-  return Cookies.get(Keyword)
+export function getUsername(){
+  return Cookies.get(username)
 }
 
-export function setKeyword(keyword){
-  return Cookies.set(Keyword, keyword)
+export function setUsername(name){
+  return Cookies.set(username, name)
 }
 
-export function removeKeyword(keyword){
-  return Cookies.remove(Keyword)
+export function removeUsername(){
+  return Cookies.remove(username)
+}
+
+export function getMemberId(){
+  return Cookies.get(memberId)
+}
+
+export function setMemberId(id){
+  return Cookies.set(memberId, id)
+}
+
+export function removeMemberId(){
+  return Cookies.remove(memberId)
 }
