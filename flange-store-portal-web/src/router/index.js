@@ -21,7 +21,7 @@ export default new Router({
       component: () => import('@/views/search/SearchResult')
     },
     {
-      path:'/product',
+      path:'/product/:productId',
       name:'Product',
       component: () => import('@/views/product/ProductDetail')
     }

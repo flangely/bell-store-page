@@ -62,12 +62,14 @@
                 <el-carousel-item>
                   <ul>
                     <li v-for="item in newProductList01">
+                      <router-link :to="{name:'Product', params:{productId:item.id}}">
                       <div style="width:120px;height:150px">
                         <div>
                           <img width="120px" height="140px" :src="item.pictureUrl">
                         </div>
                         <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
                       </div>
+                      </router-link>
                     </li>
                   </ul>
                 </el-carousel-item>
@@ -75,12 +77,14 @@
                   <el-carousel-item>
                     <ul>
                       <li v-for="item in newProductList02">
+                      <router-link :to="{name:'Product', params:{productId:item.id}}">
                       <div style="width:120px;height:150px">
                         <div>
                           <img width="120px" height="140px" :src="item.pictureUrl">
                         </div>
                         <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
                       </div>
+                      </router-link>
                       </li>
                     </ul>
                   </el-carousel-item>
@@ -92,12 +96,14 @@
                 <el-carousel-item>
                   <ul>
                     <li v-for="item in hotProductList01">
+                      <router-link :to="{name:'Product', params:{productId:item.id}}">
                       <div style="width:120px;height:150px">
                         <div>
                           <img width="120px" height="140px" :src="item.pictureUrl">
                         </div>
                         <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
                       </div>
+                      </router-link>
                     </li>
                   </ul>
                 </el-carousel-item>
@@ -105,12 +111,14 @@
                   <el-carousel-item>
                     <ul>
                       <li v-for="item in hotProductList02">
+                      <router-link :to="{name:'Product', params:{productId:item.id}}">
                       <div style="width:120px;height:150px">
                         <div>
                           <img width="120px" height="140px" :src="item.pictureUrl">
                         </div>
                         <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
                       </div>
+                      </router-link>
                       </li>
                     </ul>
                   </el-carousel-item>

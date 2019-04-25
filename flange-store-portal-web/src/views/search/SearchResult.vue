@@ -12,7 +12,8 @@
           v-for="(item, index) in bookList"
           :key="bookList.id"
         >
-          <el-card :body-style="{ padding: '0px',width:'230px',height:'410px'}" v-bind="item">
+          <el-card  :body-style="{ padding: '0px',width:'230px',height:'410px'}" v-bind="item">
+            <router-link :to="{name:'Product', params: {productId:item.id}}">
             <img :src="item.pic" class="image">
             <div style="padding: 10px;text-align:center">
               <span v-if="item.name.length > 10">{{item.name.substring(0,10)}}...</span>
@@ -20,14 +21,17 @@
               <div>
                 <el-row v-if="item.subTitle.length > 10">{{item.subTitle.substring(0, 10)}}...</el-row>
                 <el-row v-else>{{item.subTitle}}</el-row>
-                <el-row style="padding-top:8px">
+              </div>
+            </div>
+            </router-link>
+            <div>
+              <el-row style="padding-top:8px">
                   <el-button v-if="collected.indexOf(item.id) > -1" style="margin-left:12px;width:100%;height:40px" class="button" @click="cancelMyCollected(item.id)">取消收藏</el-button>
                   <el-button v-else style="margin-left:12px;width:100%;height:40px" class="button" @click="collectProduct(item)">收藏</el-button>
                 </el-row>
                 <el-row style="padding-top:8px">
                   <el-button style="margin-left:12px;width:100%;height:40px" class="button" @click="addToCart(item.id)">加入购物车</el-button>
                 </el-row>
-              </div>
             </div>
           </el-card>
         </el-col>
@@ -134,7 +138,12 @@ export default {
         this.$store.dispatch('GetInfo').then(res => {
           this.username = this.$store.state.user.name;
         })
-    }
+    },
+    // toProductDetail(productId){
+    //   this.$router.push({name:'Product', params:{
+    //     productId:productId
+    //   }})
+    // }
   },
   created() {
     this.key = this.$route.params.keyword;
