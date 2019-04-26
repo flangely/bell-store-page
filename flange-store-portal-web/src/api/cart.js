@@ -17,7 +17,7 @@ export function listAll(){
 
 export function updateQuantity(params){
     return request({
-        url:'/update/quantity',
+        url:'/cart/update/quantity',
         method:'put',
         params:params
     })

@@ -29,8 +29,8 @@
           <el-menu-item index="4-1">账号管理</el-menu-item>
           <el-menu-item index="4-2" @click="loginOut">退出登录</el-menu-item>
         </el-submenu>
-      <el-menu-item index="6">我的订单</el-menu-item>
-      <el-menu-item index="7">购物车</el-menu-item>
+      <el-menu-item index="6" @click="toOrder">我的订单</el-menu-item>
+      <el-menu-item index="7" @click="toCart">购物车</el-menu-item>
     </el-menu>
   </div>
 </template>
@@ -64,6 +64,20 @@ import {getInfo} from '@/api/login'
         this.$store.dispatch('LogOut').then(() => {
         location.reload();
         })
+      },
+      toOrder(){
+        if(this.username !== undefined && this.username !== ''){
+          this.$router.push({path:'/order'});
+        }else{
+          this.$router.push({path:'/login'});
+        }
+      },
+      toCart(){
+        if(this.username !== undefined && this.username !== ''){
+          this.$router.push({path:'/cart'});
+        }else{
+          this.$router.push({path:'/login'});
+        }
       }
     },
     created(){
