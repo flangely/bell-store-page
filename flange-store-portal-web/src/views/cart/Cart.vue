@@ -11,7 +11,8 @@
             <el-tabs type="border-card">
               <el-row style="margin-bottom:1%" :gutter="4">
                 <el-col :span="12">
-                  <el-button size="medium" type="primary" style="background:#FF4400;color:white;">结算</el-button>
+                  <el-button @click="generateConfirm(cartMultiSelection.map(val => {
+                      return val.id}))" size="medium" type="primary" style="background:#FF4400;color:white;">结算</el-button>
                 </el-col>
                 <el-col :span="12">
                   总金额:
@@ -112,7 +113,7 @@
                   <el-table-column label="单价" width="200" align="center">
                     <template slot-scope="scope">￥{{scope.row.productPrice}}</template>
                   </el-table-column>
-                  <el-table-column label="收藏时间" width="300" align="center">
+                  <el-table-column label="收藏时间" width="200" align="center">
                     <template slot-scope="scope">{{getDate(scope.row.createTime)}}</template>
                   </el-table-column>
                   <el-table-column label="操作" width="200" align="center">
@@ -138,6 +139,7 @@ import {
   cancelCollect,
   multiCancelCollect
 } from "@/api/collect";
+import {generateConfirmOrder} from "@/api/order"
 export default {
   components: {
     "v-header": Header
@@ -150,7 +152,8 @@ export default {
       cartDelBtn:false,
       collectedData: [],
       collectedMultiSelction: [],
-      collectDelBtn:false
+      collectDelBtn:false,
+      orderConfirmInfo: {}
     };
   },
   computed: {
@@ -264,6 +267,26 @@ export default {
           });
         }
       });
+    },
+    generateConfirm(ids){
+        this.$confirm('确认结算', '提示',{
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            type: "info"
+        }).then(() => {
+            let map = {};
+            if(ids.constructor == String){
+                let arr = [];
+                arr.push(ids);
+                map.cartItemIds = arr;
+            }else{
+                map.cartItemIds = ids;
+            }
+            generateConfirmOrder(map).then(response => {
+            this.orderConfirmInfo = response.data;
+            console.log(response.data);
+        })
+        })
     }
   },
   created() {
