@@ -10,10 +10,89 @@
           <el-tab-pane label="购物车">
             <el-tabs type="border-card">
               <el-row style="margin-bottom:1%" :gutter="4">
-                <el-col :span="12">
-                  <el-button @click="generateConfirm(cartMultiSelection.map(val => {
-                      return val.id}))" size="medium" type="primary" style="background:#FF4400;color:white;">结算</el-button>
+                <el-col :span="6">
+                  <el-button
+                    @click="generateConfirm(cartMultiSelection.map(val => {
+                      return val.id}))"
+                    size="medium"
+                    type="primary"
+                    style="background:#FF4400;color:white;"
+                  >结算</el-button>
+                  <el-dialog
+                    v-if="orderConfirmInfo !== null"
+                    title="确认订单"
+                    :visible.sync="orderDialog"
+                  >
+                    <el-form style="paddng:10%">
+                      <el-form-item label="商品总价:">
+                        <span
+                          style="color:#FF4400;font-weight:bold"
+                        >￥{{orderConfirmInfo.calcAmount.totalAmount}}</span>
+                      </el-form-item>
+                      <el-form-item label="运费:">
+                        <span
+                          style="color:#FF4400;font-weight:bold"
+                        >￥{{orderConfirmInfo.calcAmount.freightAmount}}</span>
+                      </el-form-item>
+                      <el-form-item label="合计:">
+                        <span
+                          style="color:#FF4400;font-weight:bold"
+                        >￥{{orderConfirmInfo.calcAmount.payAmount}}</span>
+                      </el-form-item>
+                      <el-form-item label="收货地址:">
+                        <el-select v-model="selectAddressId" placeholder="请选择">
+                          <el-option
+                            v-for="item in orderConfirmInfo.memberReceiveAddressList"
+                            :key="item.id"
+                            :label="item.name + ' ' + item.phoneNumber + ' ' + item.detailAddress"
+                            :value="item.id"
+                          ></el-option>
+                        </el-select>
+                      </el-form-item>
+                      <el-form-item>
+                        <el-button size="small" type="primary" @click="addressDialog=true">新增收货地址</el-button>
+                      </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                      <el-button @click="orderDialog = false">取 消</el-button>
+                      <el-button type="primary" @click="commitOrder">提交订单</el-button>
+                    </div>
+                  </el-dialog>
+                  <el-dialog title="新增收货地址" :visible.sync="addressDialog">
+                    <el-form style="paddng:10%" v-model="addressObj">
+                      <el-form-item label="姓名">
+                        <el-input v-model="addressObj.name" placeholder></el-input>
+                      </el-form-item>
+                      <el-form-item label="电话">
+                        <el-input v-model="addressObj.phoneNumber" placeholder></el-input>
+                      </el-form-item>
+                      <el-form-item label="邮编">
+                        <el-input v-model="addressObj.postCode" placeholder></el-input>
+                      </el-form-item>
+                      <el-form-item label="是否默认">
+                        <el-switch
+                          active-value="1"
+                          inactive-value="0"
+                          v-model="addressObj.defaultStatus"
+                        ></el-switch>
+                      </el-form-item>
+                      <el-form-item label="省/直辖市">
+                        <el-input v-model="addressObj.province" placeholder></el-input>
+                      </el-form-item>
+                      <el-form-item label="区/县">
+                        <el-input v-model="addressObj.region" placeholder></el-input>
+                      </el-form-item>
+                      <el-form-item label="详细地址">
+                        <el-input v-model="addressObj.detailAddress" placeholder></el-input>
+                      </el-form-item>
+                    </el-form>
+                    <div slot="footer" class="dialog-footer">
+                      <el-button @click="addressDialog = false">取 消</el-button>
+                      <el-button type="primary" @click="addMyAddress(addressObj)">确定</el-button>
+                    </div>
+                  </el-dialog>
                 </el-col>
+                <el-col :span="6" style="padding-top:1%">共{{cartMultiSelection.length}}件商品</el-col>
                 <el-col :span="12">
                   总金额:
                   <span style="color:#FF4400;font-weight:bold;font-size:30px">￥{{totalMonney}}</span>
@@ -96,7 +175,12 @@
                     return val.productId}))"
                   >批量删除</el-button>
                 </el-row>
-                <el-table :border="true" :data="collectedData" style="width: 100%" @selection-change="handleCollectSelection">
+                <el-table
+                  :border="true"
+                  :data="collectedData"
+                  style="width: 100%"
+                  @selection-change="handleCollectSelection"
+                >
                   <el-table-column type="selection" width="60" align="center"></el-table-column>
                   <el-table-column label="商品信息" width="300" align="center">
                     <template slot-scope="scope">
@@ -139,7 +223,8 @@ import {
   cancelCollect,
   multiCancelCollect
 } from "@/api/collect";
-import {generateConfirmOrder} from "@/api/order"
+import { generateConfirmOrder, generateOrder } from "@/api/order";
+import { addAddress, listAddress } from "@/api/address";
 export default {
   components: {
     "v-header": Header
@@ -149,11 +234,25 @@ export default {
       loading: false,
       cartData: [],
       cartMultiSelection: [],
-      cartDelBtn:false,
+      cartDelBtn: false,
       collectedData: [],
       collectedMultiSelction: [],
-      collectDelBtn:false,
-      orderConfirmInfo: {}
+      collectDelBtn: false,
+      orderConfirmInfo: null,
+      orderDialog: false,
+      addressDialog: false,
+      selectAddressId: "",
+      addressObj: {
+        name: "",
+        phoneNumber: "",
+        defaultStatus: 0,
+        postCode: "",
+        province: "",
+        city: "",
+        region: "",
+        detailAddress: ""
+      },
+      commitedOrderInfo: {}
     };
   },
   computed: {
@@ -219,8 +318,8 @@ export default {
     handleCartSelection(val) {
       this.cartMultiSelection = val;
     },
-    handleCollectSelection(val){
-        this.collectedMultiSelction = val;
+    handleCollectSelection(val) {
+      this.collectedMultiSelction = val;
     },
     delCart(id) {
       this.$confirm("确认删除", "提示", {
@@ -268,25 +367,59 @@ export default {
         }
       });
     },
-    generateConfirm(ids){
-        this.$confirm('确认结算', '提示',{
-            confirmButtonText: "确定",
-            cancelButtonText: "取消",
-            type: "info"
+    generateConfirm(ids) {
+      if (ids.length === 0) {
+        this.$message({ type: "error", message: "请先选择商品" });
+      } else {
+        this.$confirm("确认结算", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "info"
         }).then(() => {
-            let map = {};
-            if(ids.constructor == String){
-                let arr = [];
-                arr.push(ids);
-                map.cartItemIds = arr;
-            }else{
-                map.cartItemIds = ids;
-            }
-            generateConfirmOrder(map).then(response => {
+          let map = {};
+          if (ids.constructor == String) {
+            let arr = [];
+            arr.push(ids);
+            map.cartItemIds = arr;
+          } else {
+            map.cartItemIds = ids;
+          }
+          generateConfirmOrder(map).then(response => {
             this.orderConfirmInfo = response.data;
             console.log(response.data);
-        })
-        })
+            this.orderDialog = true;
+          });
+        });
+      }
+    },
+    addMyAddress(address) {
+      addAddress(address).then(response => {
+        this.addressDialog = false;
+        listAddress().then(response => {
+          this.$message({ type: "success", message: "添加成功" });
+          this.orderConfirmInfo.memberReceiveAddressList = response.data;
+        });
+      });
+    },
+    commitOrder() {
+      this.$confirm("确认提交", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "info"
+      }).then(() => {
+        let map = {};
+        map.memberReceiveAddressId = this.selectAddressId;
+        map.payType = 0;
+        map.cartItemIds = this.cartMultiSelection.map(val => {
+          return val.id;
+        });
+        generateOrder(map).then(response => {
+          this.commitedOrderInfo = response.data;
+          this.orderDialog = false;
+          this.getMyCartItem();
+          this.$message({ type: "success", message: "下单成功" });
+        });
+      });
     }
   },
   created() {

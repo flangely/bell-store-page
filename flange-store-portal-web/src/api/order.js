@@ -7,3 +7,11 @@ export function generateConfirmOrder(ids){
         data:ids
     })
 }
+
+export function generateOrder(data){
+    return request({
+        url:'/order/generateOrder',
+        method:'post',
+        data:data
+    })
+}

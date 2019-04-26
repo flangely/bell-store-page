@@ -15,9 +15,9 @@
         <span class="color-danger">当前订单状态：{{order.status | formatStatus}}</span>
         <div class="operate-button-container" v-show="order.status===0">
           <el-button size="mini" @click="showUpdateReceiverDialog">修改收货人信息</el-button>
-          <el-button size="mini">修改商品信息</el-button>
+<!--          <el-button size="mini">修改商品信息</el-button>
           <el-button size="mini" @click="showUpdateMoneyDialog">修改费用信息</el-button>
-          <el-button size="mini" @click="showMessageDialog">发送站内信</el-button>
+          <el-button size="mini" @click="showMessageDialog">发送站内信</el-button>-->
           <el-button size="mini" @click="showCloseOrderDialog">关闭订单</el-button>
           <el-button size="mini" @click="showMarkOrderDialog">备注订单</el-button>
         </div>
@@ -52,7 +52,7 @@
         </el-row>
         <el-row>
           <el-col :span="4" class="table-cell">{{order.orderSn}}</el-col>
-          <el-col :span="4" class="table-cell">暂无</el-col>
+          <el-col :span="4" class="table-cell"></el-col>
           <el-col :span="4" class="table-cell">{{order.memberUsername}}</el-col>
           <el-col :span="4" class="table-cell">{{order.payType | formatPayType}}</el-col>
           <el-col :span="4" class="table-cell">{{order.sourceType | formatSourceType}}</el-col>
@@ -62,9 +62,9 @@
           <el-col :span="4" class="table-cell-title">配送方式</el-col>
           <el-col :span="4" class="table-cell-title">物流单号</el-col>
           <el-col :span="4" class="table-cell-title">自动确认收货时间</el-col>
-          <el-col :span="4" class="table-cell-title">订单可得优币</el-col>
-          <el-col :span="4" class="table-cell-title">订单可得成长值</el-col>
-          <el-col :span="4" class="table-cell-title">活动信息</el-col>
+          <el-col :span="4" class="table-cell-title"></el-col>
+          <el-col :span="4" class="table-cell-title"></el-col>
+          <el-col :span="4" class="table-cell-title"></el-col>
         </el-row>
         <el-row>
           <el-col :span="4" class="table-cell">{{order.deliveryCompany | formatNull}}</el-col>
