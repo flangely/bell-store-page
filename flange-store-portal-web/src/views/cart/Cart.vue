@@ -20,8 +20,13 @@
               </el-row>
               <hr>
               <el-row style="margin-bottom:1%">
-                <el-button size="medium" type="primary" @click="delCart(cartMultiSelection.map(val => {
-                    return val.id}))">批量删除</el-button>
+                <el-button
+                  v-if="cartMultiSelection.length > 1"
+                  size="medium"
+                  type="primary"
+                  @click="delCart(cartMultiSelection.map(val => {
+                    return val.id}))"
+                >批量删除</el-button>
               </el-row>
               <el-tab-pane label="购物车商品">
                 <el-table
@@ -79,14 +84,18 @@
             </el-tabs>
           </el-tab-pane>
           <el-tab-pane label="我的收藏">
-            
             <el-tabs type="border-card">
               <el-tab-pane label="收藏商品">
                 <el-row style="margin-bottom:1%">
-                <el-button size="medium" type="primary" @click="delCollected(collectedMultiSelction.map(val => {
-                    return val.productId}))">批量删除</el-button>
-              </el-row>
-                <el-table :border="true" :data="collectedData" style="width: 100%">
+                  <el-button
+                    v-if="collectedMultiSelction.length > 1"
+                    size="medium"
+                    type="primary"
+                    @click="delCollected(collectedMultiSelction.map(val => {
+                    return val.productId}))"
+                  >批量删除</el-button>
+                </el-row>
+                <el-table :border="true" :data="collectedData" style="width: 100%" @selection-change="handleCollectSelection">
                   <el-table-column type="selection" width="60" align="center"></el-table-column>
                   <el-table-column label="商品信息" width="300" align="center">
                     <template slot-scope="scope">
@@ -124,7 +133,11 @@
 import Header from "@/components/navigator/Header";
 import { listAll, updateQuantity, delCartItem } from "@/api/cart";
 import { floatAdd, floatSub, floatMul } from "@/utils/compute.js";
-import { listCollectProduct, cancelCollect } from "@/api/collect";
+import {
+  listCollectProduct,
+  cancelCollect,
+  multiCancelCollect
+} from "@/api/collect";
 export default {
   components: {
     "v-header": Header
@@ -134,8 +147,10 @@ export default {
       loading: false,
       cartData: [],
       cartMultiSelection: [],
+      cartDelBtn:false,
       collectedData: [],
       collectedMultiSelction: [],
+      collectDelBtn:false
     };
   },
   computed: {
@@ -201,23 +216,26 @@ export default {
     handleCartSelection(val) {
       this.cartMultiSelection = val;
     },
+    handleCollectSelection(val){
+        this.collectedMultiSelction = val;
+    },
     delCart(id) {
       this.$confirm("确认删除", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-          let map = {};
-          if(id.constructor == Array){
-              map.ids = id;
-          }else{
-              let arr = [];
-              arr.push(id);
-              map.ids = arr;
-          }
+        let map = {};
+        if (id.constructor == Array) {
+          map.ids = id;
+        } else {
+          let arr = [];
+          arr.push(id);
+          map.ids = arr;
+        }
         delCartItem(map).then(response => {
-            this.getMyCartItem();
-            this.$message({type:'success', message:'删除成功'})
+          this.getMyCartItem();
+          this.$message({ type: "success", message: "删除成功" });
         });
       });
     },
@@ -232,10 +250,19 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        cancelCollect(id).then(response => {
+        if (id.constructor === String) {
+          cancelCollect(id).then(response => {
             this.getMyCollect();
-            this.$message({type:'success', message:'删除成功'})
-        });
+            this.$message({ type: "success", message: "删除成功" });
+          });
+        } else {
+          let map = {};
+          map.ids = id;
+          multiCancelCollect(map).then(response => {
+            this.getMyCollect();
+            this.$message({ type: "success", message: "删除成功" });
+          });
+        }
       });
     }
   },

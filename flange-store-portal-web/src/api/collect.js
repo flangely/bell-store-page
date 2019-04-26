@@ -16,6 +16,14 @@ export function cancelCollect(id){
     })
 }
 
+export function multiCancelCollect(ids){
+    return request({
+        url:'/member/collection/multiDeleteProduct',
+        method:'post',
+        data:ids
+    })
+}
+
 export function listCollectProduct(){
     return request({
         url:'/member/collection/listProduct',
