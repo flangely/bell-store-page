@@ -10,7 +10,7 @@
       <el-form-item label="商品名称：" prop="name">
         <el-input v-model="value.name"></el-input>
       </el-form-item>
-      <el-form-item label="副标题：" prop="subTitle">
+      <el-form-item label="作者：" prop="subTitle">
         <el-input v-model="value.subTitle"></el-input>
       </el-form-item>
       <el-form-item label="出版社：" prop="brandId">

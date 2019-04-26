@@ -11,10 +11,10 @@
             <el-tabs type="border-card">
               <el-row style="margin-bottom:1%" :gutter="4">
                   <el-col :span="12"><el-button size="medium" type="primary" style="background:#FF4400;color:white;">结算</el-button></el-col>
-                  <el-col :span="12">总金额:<span style="color:#FF4400;font-weight:bold;font-size:30px">￥12123</span></el-col>
+                  <el-col :span="12">总金额:<span style="color:#FF4400;font-weight:bold;font-size:30px">￥{{totalMonney}}</span></el-col>
               </el-row>
               <el-tab-pane label="购物车商品">
-                <el-table :border="true" :data="cartData" style="width: 100%">
+                <el-table :border="true" :data="cartData" style="width: 100%" @selection-change="handleCartSelection">
                   <el-table-column type="selection" width="60" align="center"></el-table-column>
                   <el-table-column label="商品信息" width="200" align="center">
                       <template slot-scope="scope">
@@ -38,7 +38,7 @@
                   </el-table-column>
                   <el-table-column label="金额" align="center">
                       <template slot-scope="scope">
-                          <span>￥{{scope.row.price * scope.row.quantity}}</span>
+                          <span>￥{{floatMulCompute(scope.row.price, scope.row.quantity)}}</span>
                       </template>
                   </el-table-column>
                   <el-table-column  label="操作" align="center">
@@ -98,6 +98,7 @@
 <script>
 import Header from "@/components/navigator/Header";
 import {listAll, updateQuantity} from "@/api/cart"
+import {floatAdd, floatSub, floatMul} from "@/utils/compute.js"
 export default {
   components: {
     "v-header": Header
@@ -106,11 +107,33 @@ export default {
     return {
         loading:false,
         cartData:[],
-        collectedData:[]
+        cartMultiSelection:[],
+        collectedData:[],
+        collectedMultiSelction:[]
 
     };
   },
+  computed:{
+      totalMonney(){
+          if(this.cartMultiSelection.length > 0){
+              let total = 0;
+              this.cartMultiSelection.map((cart, index) => {
+                  let money = this.floatMulCompute(cart.price, cart.quantity);
+                  total = this.floatAddCompute(total, money);
+              })
+              return total;
+          }else{
+              return 0;
+          }
+      }
+  },
   methods:{
+      floatMulCompute(val1, val2){
+          return floatMul(val1, val2);
+      },
+      floatAddCompute(val1, val2){
+          return floatAdd(val1, val2);
+      },
       getMyCartItem(){
           listAll().then(response => {
               this.cartData = response.data;
@@ -122,6 +145,9 @@ export default {
           map.quantity = quantity;
           updateQuantity(map).then(response => {
           });
+      },
+      handleCartSelection(val){
+          this.cartMultiSelection = val;
       }
   },
   created(){
