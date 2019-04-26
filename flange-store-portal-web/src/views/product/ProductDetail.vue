@@ -34,7 +34,7 @@
               市 场 价:&nbsp&nbsp
               <s>￥{{product.originalPrice}}</s>
             </el-row>
-            <el-row style="padding-top:5%">定&nbsp&nbsp&nbsp&nbsp&nbsp价:&nbsp&nbsp￥{{product.price}}</el-row>
+            <el-row style="padding-top:5%">会 员 价:&nbsp&nbsp&nbsp￥{{product.price}}</el-row>
           </div>
           <hr>
           <el-row style="margin-top:5%">

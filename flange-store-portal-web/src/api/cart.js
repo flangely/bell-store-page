@@ -23,11 +23,11 @@ export function updateQuantity(params){
     })
 }
 
-export function delCartItem(params){
+export function delCartItem(data){
     return request({
-        url:'/delete',
+        url:'/cart/delete',
         method:'post',
-        params: params
+        data: data
     })
 }
 

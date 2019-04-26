@@ -99,6 +99,7 @@ export default {
     },
     collectProduct(val){
       if(this.username){
+        val.pictureUrl = val.pic;
         collectProduct(val).then(response => {
             this.$message({type:'success', message:'收藏成功'});
             this.listMyCollectProduct();
