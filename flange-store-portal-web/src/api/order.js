@@ -15,3 +15,10 @@ export function generateOrder(data){
         data:data
     })
 }
+
+export function listOrder(){
+    return request({
+        url:'/order/list',
+        method:'get'
+    })
+}
