@@ -76,9 +76,9 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="80" align="center">
-          <template slot-scope="scope">{{scope.row.id}}</template>
-        </el-table-column>
+        <!--<el-table-column label="编号" width="80" align="center">-->
+          <!--<template slot-scope="scope">{{scope.row.id}}</template>-->
+        <!--</el-table-column>-->
         <el-table-column label="订单编号" width="180" align="center">
           <template slot-scope="scope">{{scope.row.orderSn}}</template>
         </el-table-column>

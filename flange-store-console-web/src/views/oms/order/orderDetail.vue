@@ -23,13 +23,13 @@
         </div>
         <div class="operate-button-container" v-show="order.status===1">
           <el-button size="mini" @click="showUpdateReceiverDialog">修改收货人信息</el-button>
-          <el-button size="mini" @click="showMessageDialog">发送站内信</el-button>
+          <!--<el-button size="mini" @click="showMessageDialog">发送站内信</el-button>-->
           <el-button size="mini">取消订单</el-button>
           <el-button size="mini" @click="showMarkOrderDialog">备注订单</el-button>
         </div>
         <div class="operate-button-container" v-show="order.status===2||order.status===3">
           <el-button size="mini" @click="showLogisticsDialog">订单跟踪</el-button>
-          <el-button size="mini" @click="showMessageDialog">发送站内信</el-button>
+          <!--<el-button size="mini" @click="showMessageDialog">发送站内信</el-button>-->
           <el-button size="mini" @click="showMarkOrderDialog">备注订单</el-button>
         </div>
         <div class="operate-button-container" v-show="order.status===4">
@@ -62,15 +62,15 @@
           <el-col :span="4" class="table-cell-title">配送方式</el-col>
           <el-col :span="4" class="table-cell-title">物流单号</el-col>
           <el-col :span="4" class="table-cell-title">自动确认收货时间</el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
-          <el-col :span="4" class="table-cell-title"></el-col>
+          <!--<el-col :span="4" class="table-cell-title"></el-col>-->
+          <!--<el-col :span="4" class="table-cell-title"></el-col>-->
+          <!--<el-col :span="4" class="table-cell-title"></el-col>-->
         </el-row>
         <el-row>
           <el-col :span="4" class="table-cell">{{order.deliveryCompany | formatNull}}</el-col>
           <el-col :span="4" class="table-cell">{{order.deliverySn | formatNull}}</el-col>
           <el-col :span="4" class="table-cell">{{order.autoConfirmDay}}天</el-col>
-          <el-col :span="4" class="table-cell">{{order.integration}}</el-col>
+<!--          <el-col :span="4" class="table-cell">{{order.integration}}</el-col>
           <el-col :span="4" class="table-cell">{{order.growth}}</el-col>
           <el-col :span="4" class="table-cell">
             <el-popover
@@ -81,7 +81,7 @@
               :content="order.promotionInfo">
               <span slot="reference">{{order.promotionInfo | formatLongText}}</span>
             </el-popover>
-          </el-col>
+          </el-col>-->
         </el-row>
       </div>
       <div style="margin-top: 20px">
@@ -154,30 +154,32 @@
         <el-row>
           <el-col :span="6" class="table-cell-title">商品合计</el-col>
           <el-col :span="6" class="table-cell-title">运费</el-col>
-          <el-col :span="6" class="table-cell-title">优惠券</el-col>
-          <el-col :span="6" class="table-cell-title">积分抵扣</el-col>
+          <el-col :span="6" class="table-cell-title">订单总金额</el-col>
+          <el-col :span="6" class="table-cell-title">应付款金额</el-col>
+          <!--<el-col :span="6" class="table-cell-title">优惠券</el-col>-->
+          <!--<el-col :span="6" class="table-cell-title">积分抵扣</el-col>-->
         </el-row>
         <el-row>
           <el-col :span="6" class="table-cell">￥{{order.totalAmount}}</el-col>
           <el-col :span="6" class="table-cell">￥{{order.freightAmount}}</el-col>
-          <el-col :span="6" class="table-cell">-￥{{order.couponAmount}}</el-col>
-          <el-col :span="6" class="table-cell">-￥{{order.integrationAmount}}</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6" class="table-cell-title">活动优惠</el-col>
-          <el-col :span="6" class="table-cell-title">折扣金额</el-col>
-          <el-col :span="6" class="table-cell-title">订单总金额</el-col>
-          <el-col :span="6" class="table-cell-title">应付款金额</el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="6" class="table-cell">-￥{{order.promotionAmount}}</el-col>
-          <el-col :span="6" class="table-cell">-￥{{order.discountAmount}}</el-col>
           <el-col :span="6" class="table-cell">
             <span class="color-danger">￥{{order.totalAmount+order.freightAmount}}</span>
           </el-col>
           <el-col :span="6" class="table-cell">
             <span class="color-danger">￥{{order.payAmount+order.freightAmount-order.discountAmount}}</span>
           </el-col>
+          <!--<el-col :span="6" class="table-cell">-￥{{order.couponAmount}}</el-col>-->
+          <!--<el-col :span="6" class="table-cell">-￥{{order.integrationAmount}}</el-col>-->
+        </el-row>
+        <el-row>
+          <!--<el-col :span="6" class="table-cell-title">活动优惠</el-col>-->
+          <!--<el-col :span="6" class="table-cell-title">折扣金额</el-col>-->
+
+        </el-row>
+        <el-row>
+          <!--<el-col :span="6" class="table-cell">-￥{{order.promotionAmount}}</el-col>-->
+          <!--<el-col :span="6" class="table-cell">-￥{{order.discountAmount}}</el-col>-->
+
         </el-row>
       </div>
       <div style="margin-top: 20px">

@@ -77,7 +77,7 @@
               </el-table-column>
             </el-table>
             <el-dialog :title="addressTitle" :visible.sync="addressDialog" width="60%" center>
-              <el-form ref="addressForm" :model="addressObj" label-width="80px">
+              <el-form ref="addressForm" :model="addressObj" label-width="80px" style="padding-left:8%;padding-right:10%">
                 <el-form-item label="姓名">
                   <el-input v-model="addressObj.name"></el-input>
                 </el-form-item>
@@ -97,7 +97,7 @@
                   <el-input v-model="addressObj.region"></el-input>
                 </el-form-item>
                 <el-form-item label="详细地址">
-                  <el-input v-model="addressObj.detailAddress"></el-input>
+                  <el-input type="textarea" v-model="addressObj.detailAddress"></el-input>
                 </el-form-item>
               </el-form>
               <span slot="footer" class="dialog-footer" v-if="addressTitle === '修改收货地址'">
