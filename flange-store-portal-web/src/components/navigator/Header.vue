@@ -26,7 +26,7 @@
       <el-menu-item index="5" v-if="username === ''">注册</el-menu-item>
       <el-submenu index="4" style="margin-left:40%" v-if="username !== ''">
           <template slot="title">你好！{{username}}</template>
-          <el-menu-item index="4-1">账号管理</el-menu-item>
+          <el-menu-item index="4-1" @click="toUserPage">个人中心</el-menu-item>
           <el-menu-item index="4-2" @click="loginOut">退出登录</el-menu-item>
         </el-submenu>
       <el-menu-item index="6" @click="toOrder">我的订单</el-menu-item>
@@ -78,6 +78,9 @@ import {getInfo} from '@/api/login'
         }else{
           this.$router.push({path:'/login'});
         }
+      },
+      toUserPage(){
+        this.$router.push({path:'/user'});
       }
     },
     created(){

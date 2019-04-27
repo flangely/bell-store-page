@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-header></v-header>
-    <div v-cloak>
+    <div>
       <el-row style="background:#FF7700;color:white;font-size:30px;height:60px">
         <span style="line-height:60px;padding-left:8%">我的订单</span>
       </el-row>
       <el-row style="padding-top:2%;padding-left:6%;padding-right:6%">
-        <el-tabs type="border-card" :stretch="true">
+        <el-tabs type="border-card" :stretch="true" v-loading="pageLoading">
           <el-tab-pane label="全部订单">
             <el-table
               border="true"
@@ -283,7 +283,7 @@
 </template>
 <script>
 import Header from "@/components/navigator/Header";
-import { listOrder } from "@/api/order";
+import { listOrder, cancelMyOder } from "@/api/order";
 import { formatDate } from "@/utils/time";
 export default {
   components: {
@@ -294,7 +294,8 @@ export default {
       allOrder: [],
       waitPayOrder: [],
       waitReceiveOrder: [],
-      finishOrder: []
+      finishOrder: [],
+      pageLoading:false
     };
   },
   filters: {
@@ -315,13 +316,17 @@ export default {
       return formatDate(dateStr);
     },
     getAllOrder() {
+      this.pageLoading = true;
       listOrder().then(response => {
         this.allOrder = response.data;
         this.waitPayOrder = this.allOrder.filter(val => val.status === 0);
         this.waitReceiveOrder = this.allOrder.filter(
-          val => (val.status === 1 | val.status === 2)
+          val => (val.status === 1) | (val.status === 2)
         );
         this.finishOrder = this.allOrder.filter(val => val.status === 3);
+        this.pageLoading = false;
+      }).catch((err) => {
+        this.pageLoading = false;
       });
     },
     getCssIdSelect(val) {
@@ -335,15 +340,19 @@ export default {
         return "finish";
       }
     },
-    payOrder(id){
-
+    payOrder(id) {},
+    cancelOrder(id) {
+      this.$confirm("确定取消该订单", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        cancelMyOder(id).then(response => {
+          this.getAllOrder();
+        });
+      });
     },
-    cancelOrder(id){
-
-    },
-    applyReturn(id){
-
-    }
+    applyReturn(id) {}
   },
   created() {
     this.getAllOrder();

@@ -22,3 +22,11 @@ export function listOrder(){
         method:'get'
     })
 }
+
+export function cancelMyOder(id){
+    return request({
+        url:'/order/cancelMyOrder',
+        method:'post',
+        params:{id:id}
+    })
+}

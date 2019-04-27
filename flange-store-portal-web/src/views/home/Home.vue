@@ -38,9 +38,9 @@
       </el-row>
     </div>
     <div style="padding:1%">
-      <el-row :gutter="10" style="padding-right:7%">
+      <el-row :gutter="10" style="padding-right:7%;padding-left:7%">
         <el-col :span="5">
-          <el-form :model="searchFormData" status-icon ref="searchForm" label-width="100px" class="demo-ruleForm">
+          <!-- <el-form :model="searchFormData" status-icon ref="searchForm" label-width="100px" class="demo-ruleForm">
             <el-form-item label="关键字" prop="keyword">
               <el-input v-model="searchFormData.keyword" placeholder="请输入关键字"></el-input>
             </el-form-item>
@@ -53,9 +53,9 @@
             <el-form-item>
               <el-button type="primary" @click="submitSearchForm">搜索</el-button>
             </el-form-item>
-          </el-form>
+          </el-form> -->
         </el-col>
-        <el-col :span="19" align="center" class="list-product">
+        <el-col :span="24" align="center" class="list-product">
           <el-tabs value="first" type="border-card">
             <el-tab-pane label="新书上架" name="first">
               <el-carousel indicator-position="outside" :autoplay="false" height="300px">
@@ -256,7 +256,8 @@ export default {
 .list-product li{
     display: block;
     float: left;
-    padding-left:8px;
-    padding-top:50px
+    padding-top:5%;
+    width: 11%;
+    padding-left: 4%;
 }
 </style>

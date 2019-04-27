@@ -34,6 +34,11 @@ export default new Router({
       path:'/cart',
       name: 'Cart',
       component: () => import('@/views/cart/Cart')
+    },
+    {
+      path:'/user',
+      name:'User',
+      component: () => import('@/views/user/User')
     }
   ]
 })
