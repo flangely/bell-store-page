@@ -42,7 +42,7 @@
             <el-input-number v-model="num" :min="1" :max="10" label="描述文字"></el-input-number>
           </el-row>
           <el-row style="margin-top:5%;margin-left:9%">
-            <el-button class="el-icon-check" type="primary">立即购买</el-button>
+            <!-- <el-button class="el-icon-check" type="primary">立即购买</el-button> -->
             <el-button @click="addToCart(product.id)" class="el-icon-goods" type="primary">加入购物车</el-button>
           </el-row>
         </el-col>

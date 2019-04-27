@@ -22,3 +22,11 @@ export function changeUserInfo(data){
         data:data
     })
 }
+
+export function register(params){
+    return request({
+        url:'/sso/register',
+        method:'post',
+        params:params
+    })
+}

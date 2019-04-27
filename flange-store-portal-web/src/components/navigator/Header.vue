@@ -23,7 +23,7 @@
       </el-submenu>
       <el-menu-item index="3">客服服务</el-menu-item> -->
       <el-menu-item index="4" v-if="username === ''" @click="toLogin()" style="margin-left:40%" >登录</el-menu-item>
-      <el-menu-item index="5" v-if="username === ''">注册</el-menu-item>
+      <el-menu-item index="5" v-if="username === ''" @click="toRegister()">注册</el-menu-item>
       <el-submenu index="4" style="margin-left:40%" v-if="username !== ''">
           <template slot="title">你好！{{username}}</template>
           <el-menu-item index="4-1" @click="toUserPage">个人中心</el-menu-item>
@@ -82,6 +82,9 @@ import {getInfo} from '@/api/login'
       },
       toUserPage(){
         this.$router.push({path:'/user'});
+      },
+      toRegister(){
+        this.$router.push({path:'/register'});
       }
     },
     created(){

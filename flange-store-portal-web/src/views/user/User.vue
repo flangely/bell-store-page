@@ -118,13 +118,13 @@
               style="padding-top:5%;padding-left:16%;padding-right:40%"
             >
               <el-form-item label="原始密码">
-                <el-input v-model="pwdData.oldPwd" placeholder="请输入原始密码"></el-input>
+                <el-input v-model="pwdData.oldPwd" placeholder="请输入原始密码" type="password"></el-input>
               </el-form-item>
               <el-form-item label="新密码">
-                <el-input v-model="pwdData.newPwd" placeholder="请输入新密码"></el-input>
+                <el-input v-model="pwdData.newPwd" placeholder="请输入新密码" type="password"></el-input>
               </el-form-item>
               <el-form-item label="确认密码">
-                <el-input v-model="pwdData.reNewPwd" placeholder="请重复输入新密码"></el-input>
+                <el-input v-model="pwdData.reNewPwd" placeholder="请重复输入新密码" type="password"></el-input>
               </el-form-item>
               <el-form-item label>
                 <el-button type="primary" @click="updatePwd">修改</el-button>

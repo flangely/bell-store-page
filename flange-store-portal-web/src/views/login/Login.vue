@@ -1,4 +1,9 @@
 <template>
+<div>
+  <v-header></v-header>
+  <el-row style="background:#FF7700;color:white;font-size:30px;height:60px">
+        <span style="line-height:60px;padding-left:8%">用户登录</span>
+      </el-row>
   <div class="login" v-cloak>
     <el-card class="login-form-layout">
       <el-form
@@ -36,13 +41,20 @@
         </div>
       </el-form>
     </el-card>
-    <img :src="login_center_bg" class="login-center-layout">
+    <!-- <img :src="login_center_bg" class="login-center-layout"> -->
   </div>
+</div>
+  
 </template>
 <script>
 import login_center_bg from "@/assets/images/login_center_bg.jpg";
 import {isvalidUsername} from '@/utils/validate';
+import Header from "@/components/navigator/Header"
 export default {
+
+  components:{
+    'v-header':Header
+  },
   data() {
     const validateUsername = (rule, value ,callback) => {
       if(!isvalidUsername(value)){
@@ -105,7 +117,7 @@ export default {
   right: 0;
   width: 360px;
   height: 320px;
-  margin: 200px auto;
+  margin: 100px auto;
   border-top: 15px solid #409eff;
 }
 .login-center-layout {
