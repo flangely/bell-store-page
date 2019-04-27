@@ -46,3 +46,12 @@ export function payOrder(id, payType){
         params:{orderId:id, payType:payType}
     })
 }
+
+export function applyReturnOrder(data){
+    return request({
+        url:'/returnApply/create',
+        method:'post',
+        data:data
+    })
+
+}

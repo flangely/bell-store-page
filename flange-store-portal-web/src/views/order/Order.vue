@@ -68,7 +68,7 @@
                     <el-button type="text" @click="cancelOrder(scope.row.id)">取消订单</el-button>
                   </p>
                   <p v-if="scope.row.status === 1 || scope.row.status === 2">
-                    <el-button type="text" @click="applyReturn(scope.row.id)">申请退货</el-button>
+                    <el-button type="text" @click="applyReturn(scope.row)">申请退货</el-button>
                   </p>
                   <p v-if="scope.row.status === 4">
                     <el-button type="text" @click="deleteOrder(scope.row.id)">删除</el-button>
@@ -196,7 +196,7 @@
               <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                   <p>
-                    <el-button type="text" @click="applyReturn(scope.row.id)">申请退货</el-button>
+                    <el-button type="text" @click="applyReturn(scope.row)">申请退货</el-button>
                   </p>
                 </template>
               </el-table-column>
@@ -257,7 +257,7 @@
               <el-table-column label="操作" align="center">
                 <template slot-scope="scope">
                   <p>
-                    <el-button type="text" @click="applyReturn(scope.row.id)">申请退货</el-button>
+                    <el-button type="text" @click="applyReturn(scope.row)">申请退货</el-button>
                   </p>
                 </template>
               </el-table-column>
@@ -292,7 +292,7 @@
 </template>
 <script>
 import Header from "@/components/navigator/Header";
-import { listOrder, cancelMyOder, delOrder, payOrder } from "@/api/order";
+import { listOrder, cancelMyOder, delOrder, payOrder, applyReturnOrder } from "@/api/order";
 import { formatDate } from "@/utils/time";
 import {floatAdd} from "@/utils/compute"
 export default {
@@ -334,6 +334,12 @@ export default {
       }
       if (val === 6) {
         return "退货中";
+      }
+      if(val === 7){
+        return '退货成功';
+      }
+      if(val === 8){
+        return '退货失败';
       }
     }
   },
@@ -391,7 +397,20 @@ export default {
         });
       });
     },
-    applyReturn(id) {},
+    applyReturn(obj) {
+      this.$confirm("确认申请退货", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        obj.orderId = obj.id;
+        applyReturnOrder(obj).then(response => {
+        this.getAllOrder();
+        this.$message({type:'success', message:'申请成功'});
+      })
+      })
+      
+    },
     deleteOrder(id) {
       this.$confirm("确认删除", "提示", {
         confirmButtonText: "确定",
