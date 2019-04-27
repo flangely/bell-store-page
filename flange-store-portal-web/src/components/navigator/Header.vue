@@ -62,6 +62,7 @@ import {getInfo} from '@/api/login'
       },
       loginOut(){
         this.$store.dispatch('LogOut').then(() => {
+        this.$router.push({path:'/'});
         location.reload();
         })
       },

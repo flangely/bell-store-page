@@ -11,7 +11,7 @@ export function changePwd(oldVal, newVal){
     return request({
         url:'/sso/updatePassword',
         method:'put',
-        params:{oldVal:oldVal, newVal:newVal}
+        params:{oldPwd:oldVal, newPwd:newVal}
     })
 }
 
