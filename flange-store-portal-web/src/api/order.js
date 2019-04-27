@@ -30,3 +30,19 @@ export function cancelMyOder(id){
         params:{id:id}
     })
 }
+
+export function delOrder(id){
+    return request({
+        url:'/order/delMyOrder',
+        method:'delete',
+        params:{id:id}
+    })
+}
+
+export function payOrder(id, payType){
+    return request({
+        url:'/order/paySuccess',
+        method:'post',
+        params:{orderId:id, payType:payType}
+    })
+}
