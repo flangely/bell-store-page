@@ -28,12 +28,12 @@
         </el-input>
         <span class="note-margin">自动结束交易，不能申请售后</span>
       </el-form-item>
-      <el-form-item label="订单完成超过：" prop="commentOvertime">
-        <el-input v-model="orderSetting.commentOvertime" class="input-width">
-          <template slot="append">天</template>
-        </el-input>
-        <span class="note-margin">自动五星好评</span>
-      </el-form-item>
+      <!--<el-form-item label="订单完成超过：" prop="commentOvertime">-->
+        <!--<el-input v-model="orderSetting.commentOvertime" class="input-width">-->
+          <!--<template slot="append">天</template>-->
+        <!--</el-input>-->
+        <!--<span class="note-margin">自动五星好评</span>-->
+      <!--</el-form-item>-->
       <el-form-item>
         <el-button
           @click="confirm('orderSettingForm')"

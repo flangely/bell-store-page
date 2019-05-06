@@ -93,7 +93,7 @@
         <el-table-column label="商品名称" align="center">
           <template slot-scope="scope">
             <p>{{scope.row.name}}</p>
-            <!-- <p>品牌：{{scope.row.brandName}}</p> -->
+            <!-- <p>出版社：{{scope.row.brandName}}</p> -->
           </template>
         </el-table-column>
         <el-table-column label="出版社" align="center">

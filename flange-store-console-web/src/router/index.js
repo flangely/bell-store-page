@@ -75,7 +75,7 @@ export const constantRouterMap = [
         path: 'productCate',
         name: 'productCate',
         component: () => import('@/views/pms/productCate/index'),
-        meta: {title: '商品分类', icon: 'product-cate'}
+        meta: {title: '书籍分类', icon: 'product-cate'}
       },
       {
         path: 'addProductCate',
@@ -91,12 +91,6 @@ export const constantRouterMap = [
         meta: {title: '修改商品分类'},
         hidden: true
       },
-      // {
-      //   path: 'productAttr',
-      //   name: 'productAttr',
-      //   component: () => import('@/views/pms/productAttr/index'),
-      //   meta: {title: '商品类型', icon: 'product-attr'}
-      // },
       {
         path: 'productAttrList',
         name: 'productAttrList',
@@ -259,7 +253,7 @@ export const constantRouterMap = [
       //   path: 'brand',
       //   name: 'homeBrand',
       //   component: () => import('@/views/sms/brand/index'),
-      //   meta: {title: '品牌推荐', icon: 'product-brand'}
+      //   meta: {title: '出版社推荐', icon: 'product-brand'}
       // },
       {
         path: 'new',

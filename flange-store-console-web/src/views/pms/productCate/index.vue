@@ -191,7 +191,7 @@
       },
       handleDelete(index, row) {
         let self = this;
-        this.$confirm('是否要删除该品牌', '提示', {
+        this.$confirm('是否要删除该出版社', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'

@@ -20,8 +20,8 @@
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="品牌名称：">
-            <el-input v-model="listQuery.brandName" class="input-width" placeholder="品牌名称"></el-input>
+          <el-form-item label="出版社名称：">
+            <el-input v-model="listQuery.brandName" class="input-width" placeholder="出版社名称"></el-input>
           </el-form-item>
           <el-form-item label="推荐状态：">
             <el-select v-model="listQuery.recommendStatus" placeholder="全部" clearable class="input-width">
@@ -38,7 +38,7 @@
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
       <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleSelectBrand()">选择品牌</el-button>
+      <el-button size="mini" class="btn-add" @click="handleSelectBrand()">选择出版社</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="homeBrandTable"
@@ -50,7 +50,7 @@
         <el-table-column label="编号" width="120" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="品牌名称" align="center">
+        <el-table-column label="出版社名称" align="center">
           <template slot-scope="scope">{{scope.row.brandName}}</template>
         </el-table-column>
         <el-table-column label="是否推荐" width="200" align="center">
@@ -115,17 +115,17 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="选择品牌" :visible.sync="selectDialogVisible" width="40%">
+    <el-dialog title="选择出版社" :visible.sync="selectDialogVisible" width="40%">
       <el-input v-model="dialogData.listQuery.keyword"
                 style="width: 250px;margin-bottom: 20px"
                 size="small"
-                placeholder="品牌名称搜索">
+                placeholder="出版社名称搜索">
         <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
       </el-input>
       <el-table :data="dialogData.list"
                 @selection-change="handleDialogSelectionChange" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="品牌名称"align="center">
+        <el-table-column label="出版社名称"align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
         <el-table-column label="相关" width="220" align="center">

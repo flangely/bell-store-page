@@ -136,7 +136,7 @@
         this.getList();
       },
       handleDelete(index, row) {
-        this.$confirm('是否要删除该品牌', '提示', {
+        this.$confirm('是否要删除该出版社', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -168,7 +168,7 @@
           if (valid) {
             let data = new URLSearchParams();
             data.append("name",this.productAttrCate.name);
-            if(this.dialogTitle==="添加品牌"){
+            if(this.dialogTitle==="添加出版社"){
               createProductAttrCate(data).then(response=>{
                 this.$message({
                   message: '添加成功',
