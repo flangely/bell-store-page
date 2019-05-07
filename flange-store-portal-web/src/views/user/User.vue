@@ -32,6 +32,9 @@
                 <el-form-item label="职业">
                   <el-input v-model="userInfo.job"></el-input>
                 </el-form-item>
+                <el-form-item label="城市">
+                  <el-input v-model="userInfo.city"></el-input>
+                </el-form-item>
                 <el-form-item label="邮箱">
                   <el-input v-model="userInfo.email"></el-input>
                 </el-form-item>

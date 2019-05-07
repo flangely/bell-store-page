@@ -308,7 +308,7 @@ export default {
       pageLoading: false,
       payFormDialog: false,
       payForm: {
-        payType: "1",
+        payType: 1,
         id: "",
         orderSn: ""
       },
