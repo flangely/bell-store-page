@@ -1,7 +1,7 @@
 <template>
   <div v-loading="loading">
     <v-header></v-header>
-    <v-search :word="key" @simpleProductSearch="simpleProductSearch"></v-search>
+    <v-search ref="searchChild" :word="key" @simpleProductSearch="simpleProductSearch"></v-search>
     <el-row style="padding-right:36%;margin-top:-20px;text-align:right">共{{total}}个结果</el-row>
     <el-row v-if="bookList.length === 0" style="text-align:center">抱歉，未搜索到书籍</el-row>
     <div class="result_box">
@@ -50,12 +50,13 @@ import Search from "@/components/search/Search";
 import { simpleSearch, searchAllProduct } from "@/api/search";
 import {collectProduct, cancelCollect, listCollectProduct} from "@/api/collect"
 import {addOne} from "@/api/cart"
+import {findMemberRecord, deleteMemberRecord, deleteRecord, addRecord} from "@/api/searchRecord"
 export default {
   data() {
     return {
       loading: true,
       bookList: [],
-      pageSize: 20,
+      pageSize: 8,
       total: 0,
       //当前页书籍拥有行数
       rowCount: 0,
@@ -80,6 +81,16 @@ export default {
           this.currentPage = response.data.pageSize;
           this.total = response.data.total;
           this.loading = false;
+          if(this.$store.state.user.memberId !== undefined){
+            let map = {};
+            map.memberId = this.$store.state.user.memberId;
+            map.content = keyword;
+            addRecord(map).then(response => {
+              if(this.$refs.searchChild !== undefined){
+              this.$refs.searchChild.getMemberRecord();
+              }
+            })
+          }
         });
       } else {
           this.loading = true;

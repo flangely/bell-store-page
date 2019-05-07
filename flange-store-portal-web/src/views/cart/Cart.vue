@@ -393,7 +393,7 @@ export default {
           this.commitedOrderInfo = response.data;
           this.orderDialog = false;
           this.getMyCartItem();
-          this.$message({ type: "success", message: "下单成功" });
+          this.$message({ type: "success", message: "下单成功,请前往我的订单完成支付" });
         });
       });
     }

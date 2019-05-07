@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-header></v-header>
-    <v-search></v-search>
+    <v-search @simpleProductSearch="simpleProductSearch"></v-search>
     <div class="product-box">
       <el-row :gutter="8" style="padding-top:3%;padding-left:8%;">
         <el-col :span="8">
@@ -72,7 +72,8 @@ export default {
       albumPics: [],
       currentPic: "",
       cartItemList: [],
-      cartProductIdList: []
+      cartProductIdList: [],
+      keyword:''
     };
   },
   components: {
@@ -111,7 +112,14 @@ export default {
       addOne(map).then(response => {
         this.$message({ type: "success", message: "加入购物车成功" });
       });
-    }
+    },
+    simpleProductSearch(keyword){
+      if(keyword){
+        this.$router.push({name:'Search',params:{
+        keyword:keyword
+      }})
+      }
+    },
   },
   created() {
     this.productId = this.$route.params.productId;
