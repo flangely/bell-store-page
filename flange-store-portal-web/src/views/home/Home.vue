@@ -6,15 +6,22 @@
       <el-row :gutter="10">
         <!-- <el-col :span=1.5><div style="width:100px; height:100px"></div></el-col> -->
         <el-col :span="4">
-            <el-menu
+          <el-menu
             mode="vertical"
             background-color="#f5f5f5"
             text-color="#333"
             width="400px"
             active-text-color="#ee840b"
           >
-            <div style="font-size:16px;text-align:center;padding:15px;background:#F80;color:#FFF">书籍分类</div>
-            <el-menu-item v-for="item in productCategoryList" :key="productCategoryList.id">{{item.name}}</el-menu-item>
+            <div
+              style="font-size:16px;text-align:center;padding:15px;background:#F80;color:#FFF"
+            >书籍分类</div>
+            <el-menu-item @mouseenter.native="getChildCate(item.id)"  v-for="item in productCategoryList" :key="productCategoryList.id">
+              <el-popover  :offset="10" placement="right" width="150" trigger="hover">
+                <p v-for="child in categoryChildList"><a><router-link :to="{name:'Search', params: {keyword:child.name}}">{{child.name}}</router-link></a></p>
+                <el-button type="text" slot="reference" style="width:100%;margin:0 0;padding: 0 0;color:#000000"><a>{{item.name}}</a></el-button>
+              </el-popover>
+            </el-menu-item>
           </el-menu>
         </el-col>
         <el-col :span="16">
@@ -26,12 +33,18 @@
             </el-carousel-item>
           </el-carousel>
         </el-col>
-        <el-col :span="4" >
+        <el-col :span="4">
           <!-- <div style="width:100%; height:300px; color:D2FCED">出版社</div> -->
           <el-card class="box-card" body-style="background-color:#e6e6e6;height:100%">
-            <div style="color:#FFF;text-align:center;background:#f5b361;height:50px;line-height:50px">热门出版社</div>
+            <div
+              style="color:#FFF;text-align:center;background:#f5b361;height:50px;line-height:50px"
+            >热门出版社</div>
             <ul>
-              <div v-for="item in brandList" :key="brandList.id" class="text item"><li><a href="item.id" target="_blank">{{item.name}}</a></li></div>
+              <div v-for="item in brandList" :key="brandList.id" class="text item">
+                <li>
+                  <router-link :to="{name:'Search', params: {keyword:item.name}}">{{item.name}}</router-link>
+                </li>
+              </div>
             </ul>
           </el-card>
         </el-col>
@@ -53,7 +66,7 @@
             <el-form-item>
               <el-button type="primary" @click="submitSearchForm">搜索</el-button>
             </el-form-item>
-          </el-form> -->
+          </el-form>-->
         </el-col>
         <el-col :span="24" align="center" class="list-product">
           <el-tabs value="first" type="border-card">
@@ -63,12 +76,14 @@
                   <ul>
                     <li v-for="item in newProductList01">
                       <router-link :to="{name:'Product', params:{productId:item.id}}">
-                      <div style="width:120px;height:150px">
-                        <div>
-                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        <div style="width:120px;height:150px">
+                          <div>
+                            <img width="120px" height="140px" :src="item.pictureUrl">
+                          </div>
+                          <div
+                            style="text-align:center;line-height:20px;font-size:12px;font-weight:bold"
+                          >{{item.name}}</div>
                         </div>
-                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
-                      </div>
                       </router-link>
                     </li>
                   </ul>
@@ -77,14 +92,16 @@
                   <el-carousel-item>
                     <ul>
                       <li v-for="item in newProductList02">
-                      <router-link :to="{name:'Product', params:{productId:item.id}}">
-                      <div style="width:120px;height:150px">
-                        <div>
-                          <img width="120px" height="140px" :src="item.pictureUrl">
-                        </div>
-                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
-                      </div>
-                      </router-link>
+                        <router-link :to="{name:'Product', params:{productId:item.id}}">
+                          <div style="width:120px;height:150px">
+                            <div>
+                              <img width="120px" height="140px" :src="item.pictureUrl">
+                            </div>
+                            <div
+                              style="text-align:center;line-height:20px;font-size:12px;font-weight:bold"
+                            >{{item.name}}</div>
+                          </div>
+                        </router-link>
                       </li>
                     </ul>
                   </el-carousel-item>
@@ -97,12 +114,14 @@
                   <ul>
                     <li v-for="item in hotProductList01">
                       <router-link :to="{name:'Product', params:{productId:item.id}}">
-                      <div style="width:120px;height:150px">
-                        <div>
-                          <img width="120px" height="140px" :src="item.pictureUrl">
+                        <div style="width:120px;height:150px">
+                          <div>
+                            <img width="120px" height="140px" :src="item.pictureUrl">
+                          </div>
+                          <div
+                            style="text-align:center;line-height:20px;font-size:12px;font-weight:bold"
+                          >{{item.name}}</div>
                         </div>
-                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
-                      </div>
                       </router-link>
                     </li>
                   </ul>
@@ -111,19 +130,20 @@
                   <el-carousel-item>
                     <ul>
                       <li v-for="item in hotProductList02">
-                      <router-link :to="{name:'Product', params:{productId:item.id}}">
-                      <div style="width:120px;height:150px">
-                        <div>
-                          <img width="120px" height="140px" :src="item.pictureUrl">
-                        </div>
-                        <div style="text-align:center;line-height:20px;font-size:12px;font-weight:bold">{{item.name}}</div>
-                      </div>
-                      </router-link>
+                        <router-link :to="{name:'Product', params:{productId:item.id}}">
+                          <div style="width:120px;height:150px">
+                            <div>
+                              <img width="120px" height="140px" :src="item.pictureUrl">
+                            </div>
+                            <div
+                              style="text-align:center;line-height:20px;font-size:12px;font-weight:bold"
+                            >{{item.name}}</div>
+                          </div>
+                        </router-link>
                       </li>
                     </ul>
                   </el-carousel-item>
                 </div>
-              </el-carousel>
               </el-carousel>
             </el-tab-pane>
           </el-tabs>
@@ -135,12 +155,16 @@
 <script>
 import Header from "@/components/navigator/Header";
 import Search from "@/components/search/Search";
-import { homeContent, homeRcommendProductList, homeProductCategory} from "@/api/home";
-import {simpleSearch} from '@/api/search';
+import {
+  homeContent,
+  homeRcommendProductList,
+  homeProductCategory
+} from "@/api/home";
+import { simpleSearch } from "@/api/search";
 export default {
   components: {
-    'v-header': Header,
-    'v-search': Search
+    "v-header": Header,
+    "v-search": Search
   },
   data() {
     return {
@@ -153,24 +177,28 @@ export default {
       hotProductList01: [],
       hotProductList02: [],
       productCategoryList: [],
-      searchFormData:{
-        keyword:'',
-        author:'',
-        price:''
-      }
+      searchFormData: {
+        keyword: "",
+        author: "",
+        price: ""
+      },
+      categoryChildList: []
     };
   },
   methods: {
-    submitSearchForm(){
+    submitSearchForm() {
       simpleSearch(this.searchFormData.keyword, 0, 5).then(response => {
-      console.log(response.data);
-      })
+        console.log(response.data);
+      });
     },
-    simpleProductSearch(keyword){
-      if(keyword){
-        this.$router.push({name:'Search',params:{
-        keyword:keyword
-      }})
+    simpleProductSearch(keyword) {
+      if (keyword) {
+        this.$router.push({
+          name: "Search",
+          params: {
+            keyword: keyword
+          }
+        });
       }
     },
     getHomeContent() {
@@ -178,30 +206,42 @@ export default {
         this.advertiseList = response.data.advertiseList;
         this.brandList = response.data.brandList;
         this.newProductList = response.data.newProductList;
-        if(this.newProductList.length > 6){
+        if (this.newProductList.length > 6) {
           this.newProductList01 = this.newProductList.slice(0, 6);
-          this.newProductList02 = this.newProductList.slice(6, this.newProductList.length);
-        }else{
+          this.newProductList02 = this.newProductList.slice(
+            6,
+            this.newProductList.length
+          );
+        } else {
           this.newProductList01 = this.newProductList;
         }
         this.hotProductList = response.data.hotProductList;
-        if(this.hotProductList.length > 6){
+        if (this.hotProductList.length > 6) {
           this.hotProductList01 = this.hotProductList.slice(0, 6);
-          this.hotProductList02 = this.hotProductList.slice(6, this.hotProductList.length);
-        }else{
+          this.hotProductList02 = this.hotProductList.slice(
+            6,
+            this.hotProductList.length
+          );
+        } else {
           this.hotProductList01 = this.hotProductList;
         }
       });
     },
-    getHomeRecommendProductList(){
-      homeRcommendProductList().then((response) => {
+    getHomeRecommendProductList() {
+      homeRcommendProductList().then(response => {
         this.rcommendProductList = response.data;
-      })
+      });
     },
-    getProductCategory(id){
-      homeProductCategory(id).then((response) => {
+    getProductCategory(id) {
+      homeProductCategory(id).then(response => {
         this.productCategoryList = response.data;
-      })
+      });
+    },
+    getChildCate(id){
+      this.categoryChildList = [];
+      homeProductCategory(id).then(response => {
+        this.categoryChildList = response.data;
+      });
     }
   },
   created() {
@@ -229,35 +269,40 @@ export default {
   background-color: #ffffff;
 }
 .text {
-    font-size: 14px;
-  }
+  font-size: 14px;
+}
 
-  .item {
-    padding: 10px 8px;
-    font-size: 8px;
-  }
-  .item a{
-      text-decoration:none;
-      color: black;
-    }
-  .box-card {
-    width: 100%;
-    height: 300px;
-  }
-.item a:hover {color:#ffaa01}
-.el-card__body{
+.item {
+  padding: 10px 8px;
+  font-size: 8px;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+.box-card {
+  width: 100%;
+  height: 300px;
+}
+a:hover {
+  color: #ffaa01;
+}
+.el-card__body {
   padding: 0;
 }
-.list-product ul{
-    list-style: none;
-    line-height: 40px;
-    margin-left: 50px;
+.list-product ul {
+  list-style: none;
+  line-height: 40px;
+  margin-left: 50px;
 }
-.list-product li{
-    display: block;
-    float: left;
-    padding-top:5%;
-    width: 11%;
-    padding-left: 4%;
+.list-product li {
+  display: block;
+  float: left;
+  padding-top: 5%;
+  width: 11%;
+  padding-left: 4%;
+}
+.el-popover{
+  text-align: center;
 }
 </style>

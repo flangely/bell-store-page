@@ -25,6 +25,7 @@
           <el-row>
             <el-col style="padding-left:2%" :span="8">作者:&nbsp&nbsp{{product.subTitle}}</el-col>
             <el-col style="padding-left:2%" :span="8">出版社:&nbsp&nbsp{{product.brandName}}</el-col>
+            <el-col style="padding-left:2%" :span="8">分类:&nbsp&nbsp{{product.productCategoryName}}</el-col>
             <!-- <el-col :span="8">上架时间:&nbsp&nbsp{{product.createTime}}</el-col> -->
           </el-row>
           <div

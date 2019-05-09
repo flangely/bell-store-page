@@ -7,10 +7,11 @@ export function simpleSearch(keyword, pageNum, pageSize){
     })
 }
 
-export function detailSearch(keyword, author, price, pageNum, pageSize){
+export function detailSearch(params){
     return detailSearch({
         url:'/esProduct/search',
-        method:'get'
+        method:'get',
+        params:{keyword:params.keyword, brandId:params.brandId, productCategoryId:params.productCategoryId, pageNum:params.pageNum, pageSize:params.pageSize, sort:1}
     })
 }
 

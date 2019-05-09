@@ -47,7 +47,6 @@
   
 </template>
 <script>
-import login_center_bg from "@/assets/images/login_center_bg.jpg";
 import {isvalidUsername} from '@/utils/validate';
 import Header from "@/components/navigator/Header"
 export default {
@@ -80,7 +79,6 @@ export default {
           password: [{required: true, trigger: 'blur', validator: validatePass}]
         },
       loading: false,
-      login_center_bg,
       password: 'password'
     };
   },
