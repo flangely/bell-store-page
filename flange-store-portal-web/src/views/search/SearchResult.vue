@@ -64,7 +64,8 @@ export default {
       key:'',
       collected:[],
       username:'',
-      cartItemList:[]
+      cartItemList:[],
+      oldKeyword:''
     };
   },
   components: {
@@ -74,8 +75,14 @@ export default {
   methods: {
     simpleProductSearch(keyword) {
       this.loading = true;
+      if(this.oldKeyword !== undefined && this.oldKeyword !== ''){
+        if(this.oldKeyword !== keyword && keyword !== undefined){
+          this.pageNum = 1;
+        }
+      }
       if (keyword !== "" && keyword !==undefined) {
         simpleSearch(keyword, this.pageNum, this.pageSize).then(response => {
+          this.oldKeyword = keyword;
           this.bookList = response.data.list;
           this.rowCount = Math.ceil(this.bookList.length / 4);
           this.currentPage = response.data.pageSize;

@@ -14,7 +14,7 @@
             >
           </el-row>
           <el-row :gutter="1">
-            <el-col :span="4">
+            <el-col :span="4" v-if="albumPics.length > 1">
               <img width="90%" height="90%" :src="product.pictureUrl" @mouseover="albumUrl">
             </el-col>
             <el-col :span="4" v-for="item in albumPics" :key="item">
