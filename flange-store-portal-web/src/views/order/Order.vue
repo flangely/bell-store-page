@@ -70,8 +70,11 @@
                   <p v-if="scope.row.status === 1 || scope.row.status === 2">
                     <el-button type="text" @click="applyReturn(scope.row)">申请退货</el-button>
                   </p>
-                  <p v-if="scope.row.status === 4">
+                  <p v-if="scope.row.status === 7 || scope.row.status === 8 || scope.row.status === 3 || scope.row.status === 4">
                     <el-button type="text" @click="deleteOrder(scope.row.id)">删除</el-button>
+                  </p>
+                  <p v-if="scope.row.status === 2">
+                    <el-button type="text" @click="confirmRece(scope.row.id)">确认收货</el-button>
                   </p>
                 </template>
               </el-table-column>
@@ -259,6 +262,9 @@
                   <p>
                     <el-button type="text" @click="applyReturn(scope.row)">申请退货</el-button>
                   </p>
+                  <p>
+                    <el-button type="text" @click="confirmRece(scope.row.id)">确认收货</el-button>
+                  </p>
                 </template>
               </el-table-column>
             </el-table>
@@ -294,7 +300,8 @@
 import Header from "@/components/navigator/Header";
 import { listOrder, cancelMyOder, delOrder, payOrder, applyReturnOrder } from "@/api/order";
 import { formatDate } from "@/utils/time";
-import {floatAdd} from "@/utils/compute"
+import {floatAdd} from "@/utils/compute";
+import {confirmReceiveOrder} from "@/api/order";
 export default {
   components: {
     "v-header": Header
@@ -430,6 +437,18 @@ export default {
     },
     addFloat(val1, val2){
       return floatAdd(val1, val2);
+    },
+    confirmRece(id){
+      this.$confirm("确认收货", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(() => {
+        confirmReceiveOrder(id).then(response => {
+          this.getAllOrder();
+          this.$message({type:'success', message:'确认收货成功'});
+        })
+      });
     }
   },
   created() {

@@ -117,22 +117,22 @@
                 v-model="scope.row.publishStatus">
               </el-switch>
             </p>
-            <p>新品：
-              <el-switch
-                @change="handleNewStatusChange(scope.$index, scope.row)"
-                :active-value="1"
-                :inactive-value="0"
-                v-model="scope.row.newStatus">
-              </el-switch>
-            </p>
-            <p>推荐：
-              <el-switch
-                @change="handleRecommendStatusChange(scope.$index, scope.row)"
-                :active-value="1"
-                :inactive-value="0"
-                v-model="scope.row.recommandStatus">
-              </el-switch>
-            </p>
+            <!--<p>新品：-->
+              <!--<el-switch-->
+                <!--@change="handleNewStatusChange(scope.$index, scope.row)"-->
+                <!--:active-value="1"-->
+                <!--:inactive-value="0"-->
+                <!--v-model="scope.row.newStatus">-->
+              <!--</el-switch>-->
+            <!--</p>-->
+            <!--<p>推荐：-->
+              <!--<el-switch-->
+                <!--@change="handleRecommendStatusChange(scope.$index, scope.row)"-->
+                <!--:active-value="1"-->
+                <!--:inactive-value="0"-->
+                <!--v-model="scope.row.recommandStatus">-->
+              <!--</el-switch>-->
+            <!--</p>-->
           </template>
         </el-table-column>
         <!-- <el-table-column label="排序" width="100" align="center">
@@ -146,17 +146,17 @@
         <el-table-column label="销量" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sale}}</template>
         </el-table-column>
-        <el-table-column label="审核状态" width="100" align="center">
-          <template slot-scope="scope">
-            <p>{{scope.row.verifyStatus | verifyStatusFilter}}</p>
-            <p>
-              <el-button
-                type="text"
-                @click="handleShowVerifyDetail(scope.$index, scope.row)">审核详情
-              </el-button>
-            </p>
-          </template>
-        </el-table-column>
+        <!--<el-table-column label="审核状态" width="100" align="center">-->
+          <!--<template slot-scope="scope">-->
+            <!--<p>{{scope.row.verifyStatus | verifyStatusFilter}}</p>-->
+            <!--<p>-->
+              <!--<el-button-->
+                <!--type="text"-->
+                <!--@click="handleShowVerifyDetail(scope.$index, scope.row)">审核详情-->
+              <!--</el-button>-->
+            <!--</p>-->
+          <!--</template>-->
+        <!--</el-table-column>-->
         <el-table-column label="操作" width="160" align="center">
           <template slot-scope="scope">
             <p>
@@ -322,27 +322,7 @@
             value: "publishOff"
           },
           {
-            label: "设为推荐",
-            value: "recommendOn"
-          },
-          {
-            label: "取消推荐",
-            value: "recommendOff"
-          },
-          {
-            label: "设为新品",
-            value: "newOn"
-          },
-          {
-            label: "取消新品",
-            value: "newOff"
-          },
-          {
-            label: "转移到分类",
-            value: "transferCategory"
-          },
-          {
-            label: "移入回收站",
+            label: "删除商品",
             value: "recycle"
           }
         ],

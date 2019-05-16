@@ -55,3 +55,11 @@ export function applyReturnOrder(data){
     })
 
 }
+
+export function confirmReceiveOrder(param){
+    return request({
+        url:'/order/confirmReceive',
+        method:'put',
+        params:{id:param}
+    })
+}

@@ -14,8 +14,11 @@
             >
           </el-row>
           <el-row :gutter="1">
+            <el-col :span="4">
+              <img width="90%" height="90%" :src="product.pictureUrl" @mouseover="albumUrl">
+            </el-col>
             <el-col :span="4" v-for="item in albumPics" :key="item">
-              <img width="90%" height="90%" @click="picChange(item)" :src="item">
+              <img width="90%" height="90%" @mouseover="picChange(item)" :src="item">
             </el-col>
           </el-row>
         </el-col>
@@ -91,7 +94,7 @@ export default {
             response.data.albumPics != ""
           ) {
             this.albumPics = response.data.albumPics.split(",");
-            this.currentPic = this.albumPics[0];
+            this.currentPic = response.data.pictureUrl;
           } else {
             let arr = [];
             arr[0] = response.data.pictureUrl;
@@ -105,6 +108,9 @@ export default {
     },
     picChange(val) {
       this.currentPic = val;
+    },
+    albumUrl(){
+      this.currentPic = this.product.pictureUrl;
     },
     addToCart(val) {
       if(this.$store.state.user.token === undefined){

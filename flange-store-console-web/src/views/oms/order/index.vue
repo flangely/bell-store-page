@@ -302,8 +302,12 @@
           return '已关闭';
         } else if (value === 5) {
           return '无效订单';
-        } else {
-          return '待付款';
+        } else if (value === 6) {
+          return '退货申请中';
+        }else if (value === 7){
+          return '退货成功';
+        }else if(value === 8){
+          return '退货失败';
         }
       },
     },

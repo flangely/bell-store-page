@@ -6,7 +6,7 @@
         <el-step title="支付订单" :description="formatTime(order.paymentTime)"></el-step>
         <el-step title="平台发货" :description="formatTime(order.deliveryTime)"></el-step>
         <el-step title="确认收货" :description="formatTime(order.receiveTime)"></el-step>
-        <el-step title="完成评价" :description="formatTime(order.commentTime)"></el-step>
+        <!--<el-step title="完成评价" :description="formatTime(order.commentTime)"></el-step>-->
       </el-steps>
     </div>
     <el-card shadow="never" style="margin-top: 15px">
@@ -43,16 +43,15 @@
       </div>
       <div class="table-layout">
         <el-row>
-          <el-col :span="4" class="table-cell-title">订单编号</el-col>
-          <el-col :span="4" class="table-cell-title">发货单流水号</el-col>
+          <el-col :span="8" class="table-cell-title">订单编号</el-col>
+          <!--<el-col :span="4" class="table-cell-title">发货单流水号</el-col>-->
           <el-col :span="4" class="table-cell-title">用户账号</el-col>
           <el-col :span="4" class="table-cell-title">支付方式</el-col>
           <el-col :span="4" class="table-cell-title">订单来源</el-col>
           <el-col :span="4" class="table-cell-title">订单类型</el-col>
         </el-row>
         <el-row>
-          <el-col :span="4" class="table-cell">{{order.orderSn}}</el-col>
-          <el-col :span="4" class="table-cell"></el-col>
+          <el-col :span="8" class="table-cell">{{order.orderSn}}</el-col>
           <el-col :span="4" class="table-cell">{{order.memberUsername}}</el-col>
           <el-col :span="4" class="table-cell">{{order.payType | formatPayType}}</el-col>
           <el-col :span="4" class="table-cell">{{order.sourceType | formatSourceType}}</el-col>
@@ -69,7 +68,7 @@
         <el-row>
           <el-col :span="4" class="table-cell">{{order.deliveryCompany | formatNull}}</el-col>
           <el-col :span="4" class="table-cell">{{order.deliverySn | formatNull}}</el-col>
-          <el-col :span="4" class="table-cell">{{order.autoConfirmDay}}天</el-col>
+          <el-col :span="4" class="table-cell">15天</el-col>
 <!--          <el-col :span="4" class="table-cell">{{order.integration}}</el-col>
           <el-col :span="4" class="table-cell">{{order.growth}}</el-col>
           <el-col :span="4" class="table-cell">
@@ -127,11 +126,11 @@
             <p>货号：{{scope.row.productSn}}</p>
           </template>
         </el-table-column>
-        <el-table-column label="属性" width="120" align="center">
-          <template slot-scope="scope">
-            {{scope.row.productAttr | formatProductAttr}}
-          </template>
-        </el-table-column>
+        <!--<el-table-column label="属性" width="120" align="center">-->
+          <!--<template slot-scope="scope">-->
+            <!--{{scope.row.productAttr | formatProductAttr}}-->
+          <!--</template>-->
+        <!--</el-table-column>-->
         <el-table-column label="数量" width="120" align="center">
           <template slot-scope="scope">
             {{scope.row.productQuantity}}
