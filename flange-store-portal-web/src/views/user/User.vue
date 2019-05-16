@@ -25,6 +25,7 @@
                 </el-form-item>
                 <el-form-item label="性别">
                   <el-radio-group v-model="userInfo.gender">
+                    <el-radio :label="0">保密</el-radio>
                     <el-radio :label="1">男</el-radio>
                     <el-radio :label="2">女</el-radio>
                   </el-radio-group>
@@ -170,15 +171,23 @@ export default {
   },
   filters: {
     sexFilter(val) {
+      if(val == 0){
+        return "保密"
+      }
       if (val == 1) {
         return "男";
       }
-      return "女";
+      if(val == 2){
+        return "女";
+      }
     }
   },
   methods: {
     getDate(dateStr) {
-      return formatYMD(dateStr);
+      if(dateStr !== undefined){
+        return formatYMD(dateStr);
+      }
+      return '';
     },
     getMyInfo() {
       getUserInfo().then(response => {
