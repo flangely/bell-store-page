@@ -139,12 +139,17 @@ export default {
       }
     },
     addToCart(val){
-      let map = {};
+      if(this.$store.state.user.token === undefined){
+        this.$message({type:'warning', message:'请先登录'});
+      }else{
+        let map = {};
       map.productId = val;
       map.quantity = 1;
       addOne(map).then(response => {
         this.$message({type:'success',message:'加入购物车成功'});
-      })
+      });
+      }
+      
     },
     listMyCollectProduct(){
         listCollectProduct().then(response => {

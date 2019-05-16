@@ -20,23 +20,23 @@
         </el-table-column>
         <el-table-column label="价格/货号" width="180" align="center">
           <template slot-scope="scope">
-            <span class="font-small">价格：￥{{scope.row.productRealPrice}}</span><br>
+            <span class="font-small">价格：￥{{scope.row.productPrice}}</span><br>
             <span class="font-small">货号：NO.{{scope.row.productId}}</span>
           </template>
         </el-table-column>
-        <el-table-column label="属性" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.productAttr}}</template>
-        </el-table-column>
+        <!--<el-table-column label="属性" width="180" align="center">-->
+          <!--<template slot-scope="scope">{{scope.row.productAttr}}</template>-->
+        <!--</el-table-column>-->
         <el-table-column label="数量" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.productCount}}</template>
+          <template slot-scope="scope">{{scope.row.productQuantity}}</template>
         </el-table-column>
         <el-table-column label="小计" width="100" align="center">
-          <template slot-scope="scope">￥{{totalAmount}}</template>
+          <template slot-scope="scope">￥{{add(scope.row.productPrice, scope.row.productQuantity)}}</template>
         </el-table-column>
       </el-table>
       <div style="float:right;margin-top:15px;margin-bottom:15px">
         <span class="font-title-medium">合计：</span>
-        <span class="font-title-medium color-danger">￥{{totalAmount}}</span>
+        <span class="font-title-medium color-danger">￥{{currentOrder.payAmount}}</span>
       </div>
     </el-card>
     <el-card shadow="never" class="standard-margin">
@@ -82,18 +82,18 @@
           <el-col class="form-border form-left-bg font-small" :span="6">问题描述</el-col>
           <el-col class="form-border font-small" :span="18">{{orderReturnApply.description}}</el-col>
         </el-row>
-        <el-row>
-          <el-col class="form-border form-left-bg font-small" :span="6" style="height:100px;line-height:80px">凭证图片
-          </el-col>
-          <el-col class="form-border font-small" :span="18" style="height:100px">
-            <img v-for="item in proofPics" style="width:80px;height:80px" :src="item">
-          </el-col>
-        </el-row>
+        <!--<el-row>-->
+          <!--<el-col class="form-border form-left-bg font-small" :span="6" style="height:100px;line-height:80px">凭证图片-->
+          <!--</el-col>-->
+          <!--<el-col class="form-border font-small" :span="18" style="height:100px">-->
+            <!--<img v-for="item in proofPics" style="width:80px;height:80px" :src="item">-->
+          <!--</el-col>-->
+        <!--</el-row>-->
       </div>
       <div class="form-container-border">
         <el-row>
           <el-col class="form-border form-left-bg font-small" :span="6">订单金额</el-col>
-          <el-col class="form-border font-small" :span="18">￥{{totalAmount}}</el-col>
+          <el-col class="form-border font-small" :span="18">￥{{currentOrder.payAmount}}</el-col>
         </el-row>
         <el-row>
           <el-col class="form-border form-left-bg font-small" :span="6" style="height:52px;line-height:32px">确认退款金额
@@ -198,6 +198,8 @@
   import {getApplyDetail,updateApplyStatus} from '@/api/returnApply';
   import {fetchList} from '@/api/companyAddress';
   import {formatDate} from '@/utils/date';
+  import {getOrderDetail} from '@/api/order';
+  import {floatMul} from '@/utils/compute';
 
   const defaultUpdateStatusParam = {
     companyAddressId: null,
@@ -246,12 +248,14 @@
         productList: null,
         proofPics: null,
         updateStatusParam: Object.assign({}, defaultUpdateStatusParam),
-        companyAddressList: null
+        companyAddressList: null,
+        currentOrder:{}
       }
     },
     created() {
       this.id = this.$route.query.id;
       this.getDetail();
+      this.getOrder(this.$route.query.orderId);
     },
     computed: {
       totalAmount() {
@@ -303,6 +307,20 @@
       }
     },
     methods: {
+      getOrder(orderId){
+        getOrderDetail(orderId).then(response => {
+          this.currentOrder = response.data;
+          this.updateStatusParam.returnAmount = this.currentOrder.payAmount;
+          this.productList = this.currentOrder.orderItemList;
+        })
+      },
+      add(val1, val2){
+        if(val1 != null){
+          return floatMul(val1, val2);
+        }
+        return 0;
+
+      },
       handleViewOrder(){
         this.$router.push({path:'/oms/orderDetail',query:{id:this.orderReturnApply.orderId}});
       },

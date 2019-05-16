@@ -404,7 +404,12 @@ export default {
         type: "warning"
       }).then(() => {
         obj.orderId = obj.id;
-        applyReturnOrder(obj).then(response => {
+        let map = {};
+        map.orderId = obj.id;
+        map.orderSn = obj.orderSn;
+        map.receiverName = obj.receiverName;
+        map.receiverPhone = obj.receiverPhone;
+        applyReturnOrder(map).then(response => {
         this.getAllOrder();
         this.$message({type:'success', message:'申请成功'});
       })

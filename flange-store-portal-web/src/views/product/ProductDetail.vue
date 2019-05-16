@@ -107,12 +107,16 @@ export default {
       this.currentPic = val;
     },
     addToCart(val) {
+      if(this.$store.state.user.token === undefined){
+        this.$message({type:'warning', message:'请先登录'});
+      }else{
       let map = {};
       map.productId = val;
       map.quantity = this.num;
       addOne(map).then(response => {
         this.$message({ type: "success", message: "加入购物车成功" });
       });
+      }
     },
     simpleProductSearch(keyword){
       if(keyword){

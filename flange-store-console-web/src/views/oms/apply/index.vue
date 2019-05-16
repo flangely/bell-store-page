@@ -76,9 +76,9 @@
         <el-table-column label="用户账号" align="center">
           <template slot-scope="scope">{{scope.row.memberUsername}}</template>
         </el-table-column>
-        <el-table-column label="退款金额" width="180" align="center">
-          <template slot-scope="scope">￥{{scope.row | formatReturnAmount}}</template>
-        </el-table-column>
+        <!--<el-table-column label="退款金额" width="180" align="center">-->
+          <!--<template slot-scope="scope">￥{{scope.row | formatReturnAmount}}</template>-->
+        <!--</el-table-column>-->
         <el-table-column label="申请状态" width="180" align="center">
           <template slot-scope="scope">{{scope.row.status | formatStatus}}</template>
         </el-table-column>
@@ -212,7 +212,7 @@
         this.getList();
       },
       handleViewDetail(index,row){
-        this.$router.push({path:'/oms/returnApplyDetail',query:{id:row.id}})
+        this.$router.push({path:'/oms/returnApplyDetail',query:{id:row.id, orderId:row.orderId}})
       },
       handleBatchOperate(){
         if(this.multipleSelection==null||this.multipleSelection.length<1){
